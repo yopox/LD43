@@ -8,6 +8,9 @@ class Level extends Phaser.Scene {
         this.map = null;
         this.guiCam = null;
         this.gui = null;
+        this.zoomState = 0;
+        this.ZKey = null;
+        this.canZoom = true;
     }
 
     preload() {
@@ -22,7 +25,11 @@ class Level extends Phaser.Scene {
         this.map.buildMap(this);
 
         this.player = new Player();
-        this.player.init(1, 2, this);
+        this.player.init(this.map.startingPos[0], this.map.startingPos[1], this);
+
+        this.zoom();
+        this.ZKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
+
     }
 
     update() {
@@ -42,6 +49,38 @@ class Level extends Phaser.Scene {
             this.player.move(this.map, dir.DOWN);
         }
 
+        // Zoom
+        if (this.ZKey.isDown) {
+            if (this.canZoom && !this.cameras.main.zoomEffect.isRunning) {
+                this.canZoom = false;
+                this.zoom();
+            }
+        } else {
+            this.canZoom = true;
+        }
+
+    }
+
+    zoom() {
+        switch (this.zoomState) {
+            case 0:
+                this.cameras.main.startFollow(this.player.sprite, false, 1, 1, -32, -32);
+                this.cameras.main.zoomTo(1, 350);
+                break;
+
+            case 1:
+                var w = this.map.width * 64;
+                var h = this.map.height * 32;
+                this.cameras.main.stopFollow();
+                this.cameras.main.pan(0, this.map.height * 32 - 16, 350);
+                if (w >= h) {
+                    this.cameras.main.zoomTo(896 / w, 350);
+                } else {
+                    this.cameras.main.zoomTo(504 / h, 350);
+                }
+                break;
+        }
+        this.zoomState = 1 - this.zoomState;
     }
 
 }

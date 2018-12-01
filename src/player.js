@@ -14,20 +14,17 @@ class Player {
         this.sprite = scene.add.sprite((x - y - 1) * 32, (x + y + 3.5) * 16, 'player', 0);
         this.sprite.setOrigin(0, 0);
         this.sprite.depth = 1000;
-        scene.cameras.main.startFollow(this.sprite);
     }
 
     update() {
         if (this.block) {
             this.block--;
-            
+
             if (this.nextPos.length && this.block % 2 == 0) {
                 var nP = this.nextPos.pop();
                 this.sprite.x += nP[1];
                 this.sprite.y += nP[2];
-                console.log(this.sprite);
                 this.sprite.setFrame(nP[0]);
-
             }
         }
     }
@@ -59,6 +56,11 @@ class Player {
                 this.nextPos = [[1, 0, 0], [2, 8, 4], [3, 8, 4], [4, 4, 2], [5, 4, 2], [6, 4, 2], [7, 4, 2], [0, 0, 0]];
                 break;
         }
+
+        if (nPos[0] == map.goal[0] && nPos[1] == map.goal[1]) {
+            console.log('yeah');
+        }
+
     }
 
 }
