@@ -35,8 +35,6 @@ class Load extends Phaser.Scene {
     }
     
     update() {
-        console.log(fontReady);
-        
         if (fontReady) {
             this.scene.start("title");
         }
