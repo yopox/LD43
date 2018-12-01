@@ -1,6 +1,6 @@
 var config = {
     type: Phaser.WEBGL,
-    backgroundColor: "#fafafa",
+    backgroundColor: "#cbdbfc",
     width: 896,
     height: 504,
     pixelArt: true,

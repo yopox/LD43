@@ -20,11 +20,14 @@ class Player {
     update() {
         if (this.block) {
             this.block--;
-            var nP = this.nextPos.pop();
+            
+            if (this.nextPos.length && this.block % 2 == 0) {
+                var nP = this.nextPos.pop();
+                this.sprite.x += nP[1];
+                this.sprite.y += nP[2];
+                console.log(this.sprite);
+                this.sprite.setFrame(nP[0]);
 
-            if (nP) {
-                this.sprite.x += nP[0];
-                this.sprite.y += nP[1];
             }
         }
     }
@@ -32,28 +35,28 @@ class Player {
     move(map, direction) {
         // Next position
         var nPos = [this.pos[0] + direction[0],
-                    this.pos[1] + direction[1]];
+        this.pos[1] + direction[1]];
 
         // The player can't move
         if (this.block || oob(nPos, map) || checkCollision(nPos, map))
             return false
 
         // Let's move
-        this.block = 16;
+        this.block = 24;
         this.pos = nPos;
 
         switch (direction) {
             case dir.UP:
-                this.nextPos = [[32, -16]];
+                this.nextPos = [[1, 0, 0], [2, 8, -4], [3, 8, -4], [4, 4, -2], [5, 4, -2], [6, 4, -2], [7, 4, -2], [0, 0, 0]];
                 break;
             case dir.DOWN:
-                this.nextPos = [[-32, 16]];
+                this.nextPos = [[1, 0, 0], [2, -8, 4], [3, -8, 4], [4, -4, 2], [5, -4, 2], [6, -4, 2], [7, -4, 2], [0, 0, 0]];
                 break;
             case dir.LEFT:
-                this.nextPos = [[-32, -16]];
+                this.nextPos = [[1, 0, 0], [2, -8, -4], [3, -8, -4], [4, -4, -2], [5, -4, -2], [6, -4, -2], [7, -4, -2], [0, 0, 0]];
                 break;
             case dir.RIGHT:
-                this.nextPos = [[32, 16]];
+                this.nextPos = [[1, 0, 0], [2, 8, 4], [3, 8, 4], [4, 4, 2], [5, 4, 2], [6, 4, 2], [7, 4, 2], [0, 0, 0]];
                 break;
         }
     }
