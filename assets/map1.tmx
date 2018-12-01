@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="12" height="12" tilewidth="8" tileheight="8" infinite="0" nextlayerid="5" nextobjectid="1">
- <tileset firstgid="1" name="tileset" tilewidth="8" tileheight="8" tilecount="2" columns="2">
-  <image source="tileset.png" width="16" height="8"/>
+<map version="1.2" tiledversion="1.2.0" orientation="orthogonal" renderorder="right-down" width="12" height="12" tilewidth="8" tileheight="8" infinite="0" nextlayerid="6" nextobjectid="2">
+ <tileset firstgid="1" name="tileset" tilewidth="8" tileheight="8" tilecount="4" columns="4">
+  <image source="tileset.png" width="32" height="8"/>
  </tileset>
  <layer id="3" name="sol" width="12" height="12">
   <data encoding="csv">
 1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,1,1,1,1,1,1,1,1,1,1,
-1,1,1,1,1,1,1,1,1,1,1,1,
+1,1,1,1,1,4,4,1,1,1,1,1,
+1,1,1,1,1,4,4,1,1,1,1,1,
+1,1,1,1,1,4,4,1,1,1,1,1,
+1,1,1,1,1,4,4,4,1,1,1,1,
+1,1,1,1,1,4,4,4,4,4,4,1,
+1,1,1,1,1,1,4,4,4,4,4,1,
 1,1,1,1,1,1,1,1,1,1,1,1,
 1,1,1,1,1,1,1,1,1,1,1,1,
 1,1,1,1,1,1,1,1,1,1,1,1,
@@ -35,4 +35,7 @@
 2,2,2,2,2,2,2,2,2,2,2,2
 </data>
  </layer>
+ <objectgroup id="5" name="objets">
+  <object id="1" gid="3" x="72" y="24" width="8" height="8"/>
+ </objectgroup>
 </map>
