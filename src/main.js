@@ -4,7 +4,8 @@ var config = {
     width: 896,
     height: 504,
     pixelArt: true,
-    scene: [ Load, Level ]
+    scene: [ Load, Title, Level ]
+    // scene: [ Title, Load, Level ]
 };
 
 var game = new Phaser.Game(config);
