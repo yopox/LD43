@@ -1,0 +1,22 @@
+{
+  "name": "ld43",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yopox/LD43.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yopox/LD43/issues"
+  },
+  "homepage": "https://github.com/yopox/LD43#readme",
+  "dependencies": {
+    "phaser": "^3.15.1"
+  }
+}
