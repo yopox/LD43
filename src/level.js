@@ -24,8 +24,12 @@ class Level extends Phaser.Scene {
         this.map = new Tilemap('map1', this);
         this.map.buildMap(this);
 
+        // Create player
         this.player = new Player();
         this.player.init(this.map.startingPos[0], this.map.startingPos[1], this);
+
+        // Create GUI
+        this.gui = new GUI(this);
 
         this.zoom();
         this.ZKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
@@ -34,6 +38,7 @@ class Level extends Phaser.Scene {
 
     update() {
         this.player.update();
+        this.gui.update(this.player);
 
         // Moving the player
         if (cursors.left.isDown) {

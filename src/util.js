@@ -17,3 +17,15 @@ function checkCollision(pos, map) {
 
     return collGround;
 }
+
+// How much moving there will cost
+function moveCost(pos, map) {
+
+    switch (map.layers[0].data[pos[1] * 8 + pos[0]]) {
+        case 2:
+            return 2;
+        default:
+            return 1;
+    }
+
+}

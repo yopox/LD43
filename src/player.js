@@ -1,7 +1,7 @@
 class Player {
 
     constructor() {
-        this.stats = [];
+        this.stats = [11, 0, 0];
         this.points = 100;
         this.sprite = null;
         this.block = 0;
@@ -31,12 +31,12 @@ class Player {
 
     move(map, direction) {
         // Next position
-        var nPos = [this.pos[0] + direction[0],
-        this.pos[1] + direction[1]];
+        var nPos = [this.pos[0] + direction[0], this.pos[1] + direction[1]];
+        var cost = moveCost(nPos, map);
 
         // The player can't move
-        if (this.block || oob(nPos, map) || checkCollision(nPos, map))
-            return false
+        if (this.block || oob(nPos, map) || checkCollision(nPos, map) || this.stats[0] < cost)
+            return false;
 
         // Let's move
         this.block = 24;
@@ -57,7 +57,11 @@ class Player {
                 break;
         }
 
-        if (nPos[0] == map.goal[0] && nPos[1] == map.goal[1]) {
+        // Update stats
+        this.stats[0] -= cost;
+
+        // The level is over
+        if (this.pos[0] == map.goal[0] && this.pos[1] == map.goal[1]) {
             console.log('yeah');
         }
 
