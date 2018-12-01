@@ -5,6 +5,7 @@ class Level extends Phaser.Scene {
     constructor() {
         super({ key: 'level' });
         this.player = null;
+        this.map = null;
     }
 
     preload() {
@@ -17,17 +18,17 @@ class Level extends Phaser.Scene {
         this.cameras.main.setSize(480, 480).setZoom(5);
 
         // Create tilemap
-        var map = this.make.tilemap({ key: 'map1' });
-        var tiles = map.addTilesetImage('tileset', 'tiles');
-        var layer = map.createStaticLayer(0, tiles, 0, 0);
-        var layer2 = map.createStaticLayer(1, tiles, 0, 0);
+        this.map = this.make.tilemap({ key: 'map1' });
+        var tiles = this.map.addTilesetImage('tileset', 'tiles');
+        var layer = this.map.createStaticLayer(0, tiles, 0, 0);
+        var layer2 = this.map.createStaticLayer(1, tiles, 0, 0);
 
-        // console.log(map.getObjectLayer('objets'));
+        console.log(this.map);
 
         this.player = new Player();
         this.player.init(3, 8, this);
 
-        this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
     }
 
@@ -36,16 +37,16 @@ class Level extends Phaser.Scene {
 
         // Moving the player
         if (cursors.left.isDown) {
-            this.player.move(dir.LEFT);
+            this.player.move(this.map, dir.LEFT);
         }
         else if (cursors.right.isDown) {
-            this.player.move(dir.RIGHT);
+            this.player.move(this.map, dir.RIGHT);
         }
         else if (cursors.up.isDown) {
-            this.player.move(dir.UP);
+            this.player.move(this.map, dir.UP);
         }
         else if (cursors.down.isDown) {
-            this.player.move(dir.DOWN);
+            this.player.move(this.map, dir.DOWN);
         }
 
     }
