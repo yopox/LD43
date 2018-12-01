@@ -26,9 +26,10 @@ class Player {
     }
 
     move(map, direction) {
-        var nPos = nextPos([Math.floor(this.sprite.x / 8), Math.floor(this.sprite.y / 8)], direction);
+        var nPos = [Math.floor(this.sprite.x / 8) + direction[0],
+                    Math.floor(this.sprite.y / 8) + direction[1]];
 
-        if (this.block || !oob(map, nPos) && checkCollision(nPos, map, direction))
+        if (this.block || !oob(nPos, map) && checkCollision(nPos, map))
             return false
 
         this.block = 16;

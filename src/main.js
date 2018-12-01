@@ -9,10 +9,3 @@ var config = {
 
 var game = new Phaser.Game(config);
 var cursors;
-
-const dir = {
-    LEFT: 'left',
-    UP: 'up',
-    RIGHT: 'right',
-    DOWN: 'down'
-};
