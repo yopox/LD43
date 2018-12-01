@@ -6,6 +6,8 @@ class Level extends Phaser.Scene {
         super({ key: 'level' });
         this.player = null;
         this.map = null;
+        this.guiCam = null;
+        this.gui = null;
     }
 
     preload() {
@@ -16,6 +18,7 @@ class Level extends Phaser.Scene {
         cursors = this.input.keyboard.createCursorKeys();
 
         this.cameras.main.setSize(480, 480).setZoom(5);
+        this.guiCam = this.cameras.add(480, 0, 200, 480).setZoom(1);
 
         // Create tilemap
         this.map = this.make.tilemap({ key: 'map1' });
@@ -29,6 +32,9 @@ class Level extends Phaser.Scene {
         this.player.init(3, 8, this);
 
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
+        this.guiCam.setBounds(480, 0, 200, 480);
+
+        this.gui = new GUI(this);
 
     }
 
