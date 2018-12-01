@@ -9,8 +9,10 @@ class Player {
     }
 
     init(x, y, scene) {
-        this.sprite = scene.add.sprite(x * 8, y * 8, 'player', 0);
+        this.sprite = scene.add.sprite((x + y) * 32, (x - y) * 16 + 40, 'player', 0);
         this.sprite.setOrigin(0, 0);
+        this.sprite.depth = 1000;
+        scene.cameras.main.startFollow(this.sprite);
     }
 
     update() {
@@ -27,9 +29,9 @@ class Player {
 
     move(map, direction) {
         var nPos = [Math.floor(this.sprite.x / 8) + direction[0],
-                    Math.floor(this.sprite.y / 8) + direction[1]];
+        Math.floor(this.sprite.y / 8) + direction[1]];
 
-        if (this.block || !oob(nPos, map) && checkCollision(nPos, map))
+        if (this.block || oob(nPos, map) || checkCollision(nPos, map))
             return false
 
         this.block = 16;

@@ -1,8 +1,8 @@
 var config = {
     type: Phaser.WEBGL,
     backgroundColor: "#fafafa",
-    width: 680,
-    height: 480,
+    width: 896,
+    height: 504,
     pixelArt: true,
     scene: [ Load, Level ]
 };
