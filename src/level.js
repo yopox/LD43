@@ -1,9 +1,17 @@
 var controls;
 
+const STATES = {
+    STATS: 0,
+    MOVE: 1,
+    WON: 2
+};
+
 class Level extends Phaser.Scene {
 
     constructor() {
         super({ key: 'level' });
+
+        this.state = STATES.MOVE;
 
         // Main UI
         this.player = null;
@@ -15,7 +23,7 @@ class Level extends Phaser.Scene {
         this.zoomState = 0;
         this.ZKey = null;
         this.canZoom = true;
-        
+
         // Popup
         this.blockMove = false;
         this.dark = null;
@@ -46,59 +54,60 @@ class Level extends Phaser.Scene {
         this.ZKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
         this.SKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
 
-        this.dark = this.add.rectangle(0, 0, 896*2, 504*2, 0x000000).setScrollFactor(0).setAlpha(0).setDepth(2000);
+        this.dark = this.add.rectangle(0, 0, 896 * 2, 504 * 2, 0x000000).setScrollFactor(0).setAlpha(0).setDepth(2000);
 
     }
 
     update() {
 
-        if (!this.blockMove) {
+        switch (this.state) {
+            case STATES.MOVE:
+                this.player.update();
+                this.gui.update(this.player);
 
-            this.player.update();
-            this.gui.update(this.player);
-
-            // Moving the player
-            if (cursors.left.isDown) {
-                this.player.move(this.map, dir.LEFT);
-            }
-            else if (cursors.right.isDown) {
-                this.player.move(this.map, dir.RIGHT);
-            }
-            else if (cursors.up.isDown) {
-                this.player.move(this.map, dir.UP);
-            }
-            else if (cursors.down.isDown) {
-                this.player.move(this.map, dir.DOWN);
-            }
-
-            // Zoom
-            if (this.ZKey.isDown) {
-                if (this.canZoom && !this.cameras.main.zoomEffect.isRunning) {
-                    this.canZoom = false;
-                    // this.zoom();
+                // Moving the player
+                if (cursors.left.isDown) {
+                    this.player.move(this.map, dir.LEFT);
                 }
-            } else {
-                this.canZoom = true;
-            }
+                else if (cursors.right.isDown) {
+                    this.player.move(this.map, dir.RIGHT);
+                }
+                else if (cursors.up.isDown) {
+                    this.player.move(this.map, dir.UP);
+                }
+                else if (cursors.down.isDown) {
+                    this.player.move(this.map, dir.DOWN);
+                }
 
-            // Stats
-            if (this.player.finishedLevel && this.player.block == 4) {
-                this.blockMove = true;
-                var tween = this.tweens.add({
-                    targets: this.dark,
-                    alpha: 0.75,
-                    ease: 'Power1',
-                    duration: 500,
-                    repeat: 0,
-                });
-                tween.setCallback("onComplete", function(lvl) {lvl.tweenOver()}, [this, ]);
-            }
+                // Zoom
+                if (this.ZKey.isDown) {
+                    if (this.canZoom && !this.cameras.main.zoomEffect.isRunning) {
+                        this.canZoom = false;
+                        // this.zoom();
+                    }
+                } else {
+                    this.canZoom = true;
+                }
 
-        } else {
-            // Control popups
+                // Stats
+                if (this.player.finishedLevel && this.player.block == 4) {
+                    this.blockMove = true;
+                    var tween = this.tweens.add({
+                        targets: this.dark,
+                        alpha: 0.75,
+                        ease: 'Power1',
+                        duration: 500,
+                        repeat: 0,
+                    });
+                    tween.setCallback("onComplete", function (lvl) { lvl.tweenOver() }, [this,]);
+                }
+                break;
 
+            case STATES.STATS:
+                break;
+            case STATES.WON:
+                break;
         }
-
     }
 
     tweenOver() {

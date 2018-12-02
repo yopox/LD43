@@ -2,7 +2,7 @@ class Player {
 
     constructor() {
         this.stats = [11, 0, 0];
-        this.points = 100;
+        this.points = 20;
         this.sprite = null;
         this.block = 0;
         this.pos = [0, 0];

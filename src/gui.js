@@ -14,6 +14,7 @@ class GUI {
     }
 
     update(player) {
+        this.left.text = "Left : " + player.points;
         this.text1.text = STATS[0] + " : " + player.stats[0];
         this.text2.text = STATS[1] + " : " + player.stats[1];
         this.text3.text = STATS[2] + " : " + player.stats[2];
