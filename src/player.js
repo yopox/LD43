@@ -1,8 +1,8 @@
 class Player {
 
     constructor() {
-        this.stats = [11, 0, 0];
-        this.points = 10;
+        this.stats = [0, 0, 0];
+        this.points = 11;
         this.sprite = null;
         this.block = 0;
         this.pos = [0, 0];
@@ -66,6 +66,14 @@ class Player {
             this.finishedLevel = true;
         }
 
+    }
+
+    reset() {
+        if (this.stats[0] > 0 || this.stats[1] > 0 || this.stats[2] > 0) {
+            this.points += this.stats[0] + this.stats[1] + this.stats[2];
+            this.stats = [0, 0, 0];
+            this.points = Math.max(0, this.points - PENALTY);
+        }
     }
 
 }

@@ -1,5 +1,3 @@
-var controls;
-
 const STATES = {
     STATS: 0,
     MOVE: 1,
@@ -29,6 +27,7 @@ class Level extends Phaser.Scene {
         this.blockMove = false;
         this.dark = null;
         this.TABKey = null;
+        this.RKey = null;
         this.distribStats = null;
     }
 
@@ -37,8 +36,6 @@ class Level extends Phaser.Scene {
     }
 
     create() {
-        cursors = this.input.keyboard.createCursorKeys();
-
         // Create tilemap
         this.map = new Tilemap('map1', this);
         this.map.buildMap(this);
@@ -47,14 +44,16 @@ class Level extends Phaser.Scene {
         this.player = new Player();
         this.player.init(this.map.startingPos[0], this.map.startingPos[1], this);
         this.cameras.main.startFollow(this.player.sprite, false, 1, 1, -32, -32);
-        
+
         // Create GUI
         this.gui = new GUI(this);
         this.gui.update(this.player);
-
-        this.TABKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
-
         this.dark = this.add.rectangle(0, 0, 896 * 2, 504 * 2, 0x000000).setScrollFactor(0).setAlpha(0).setDepth(2000);
+        
+        // Keyboard
+        cursors = this.input.keyboard.createCursorKeys();
+        RKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        this.TABKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
 
     }
 
@@ -135,6 +134,11 @@ class Level extends Phaser.Scene {
                         this.player.points--;
                         this.player.stats[this.gui.selected]++;
                     }
+                }
+                else if (Phaser.Input.Keyboard.JustDown(RKey)) {
+                    console.log(2154);
+                    
+                    this.player.reset();
                 }
 
                 this.gui.update(this.player);
