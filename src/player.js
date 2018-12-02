@@ -78,7 +78,7 @@ class Player {
     reset() {
         if (this.stats[0] > 0 || this.stats[1] > 0 || this.stats[2] > 0) {
             this.points += this.stats[0] + this.stats[1] + this.stats[2];
-            this.stats = [100, 0, 0];
+            this.stats = [0, 0, 0];
             this.points = Math.max(0, this.points - PENALTY);
         }
         if (this.points == 0 && this.stats[0] == 0 && (this.stats[1] + this.stats[2]) < PENALTY) {

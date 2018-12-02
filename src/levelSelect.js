@@ -11,7 +11,7 @@ class LevelSelect extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
 
         this.add.text(320, 32, '--- Level Selection ---',
-            {fontFamily: 'm3x6', fontSize: '48px', color: '#000000', width: 300, align: 'center'})
+            {fontFamily: 'm3x6', fontSize: '48px', color: '#000000'})
 
         for (let i = 1; i <= LEVEL_NUMBER; i++)
             this.add.image(320, 128, "lvl" + i)

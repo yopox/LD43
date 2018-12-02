@@ -2,7 +2,8 @@ const STATES = {
     STATS: 0,
     MOVE: 1,
     WON: 2,
-    TWEEN: 3
+    TWEEN: 3,
+    GAME_OVER: 4
 };
 
 class Level extends Phaser.Scene {
@@ -25,7 +26,6 @@ class Level extends Phaser.Scene {
         this.canZoom = true;
 
         // States
-        this.blockMove = false;
         this.dark = null;
         this.TABKey = null;
         this.RKey = null;
@@ -33,7 +33,7 @@ class Level extends Phaser.Scene {
         this.distribStats = null;
     }
 
-    init(data){
+    init(data) {
         this.data = data;
         this.lvlNumber = data["lvlNumber"];
     }
@@ -97,12 +97,17 @@ class Level extends Phaser.Scene {
                     this.fadeTo([this.dark, this.gui.r1], 0.25, STATES.STATS);
                 }
 
-                // Stats
+                // The player won
                 if (this.player.finishedLevel && this.player.block == 4) {
-                    this.blockMove = true;
                     this.dark.setDepth(2000);
                     this.fadeTo(this.dark, 0.25, STATES.WON);
                 }
+
+                // The player lost
+                if (this.player.gameOver && this.player.block == 4) {
+                    this.fadeTo(this.dark, 0.25, STATES.GAME_OVER);
+                }
+
                 break;
 
             case STATES.STATS:
@@ -128,11 +133,21 @@ class Level extends Phaser.Scene {
                 }
                 else if (Phaser.Input.Keyboard.JustDown(this.RKey)) {
                     this.player.reset();
+                    if (this.player.gameOver) {
+                        this.fadeTo(this.dark, 0.25, STATES.GAME_OVER);
+                    }
                 }
 
                 this.gui.update(this.player);
                 break;
+
             case STATES.WON:
+                if (this.SPACEKey.isDown) {
+                    this.scene.start("levelSelect");
+                }
+                break;
+
+            case STATES.GAME_OVER:
                 if (this.SPACEKey.isDown) {
                     this.scene.start("levelSelect");
                 }
