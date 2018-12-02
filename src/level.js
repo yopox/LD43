@@ -84,14 +84,14 @@ class Level extends Phaser.Scene {
             // Stats
             if (this.player.finishedLevel && this.player.block == 4) {
                 this.blockMove = true;
-                this.tweens.add({
+                var tween = this.tweens.add({
                     targets: this.dark,
                     alpha: 0.75,
                     ease: 'Power1',
                     duration: 500,
                     repeat: 0,
-                    onComplete: this.tweenOver
                 });
+                tween.setCallback("onComplete", function(lvl) {lvl.tweenOver()}, [this, ]);
             }
 
         } else {
@@ -102,6 +102,9 @@ class Level extends Phaser.Scene {
     }
 
     tweenOver() {
+        console.log("tweenOver");
+        console.log(this);
+        console.log(this instanceof Level);
         console.log(this.map);
     }
 
