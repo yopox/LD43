@@ -16,6 +16,12 @@
  "nextlayerid":2,
  "nextobjectid":1,
  "orientation":"isometric",
+ "properties":[
+        {
+         "name":"desc",
+         "type":"string",
+         "value":"Use TAB and\narrows to edit\nyour stats."
+        }],
  "renderorder":"right-down",
  "tiledversion":"1.2.0",
  "tileheight":32,

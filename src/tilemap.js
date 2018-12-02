@@ -3,6 +3,8 @@ class Tilemap {
     constructor(map, scene) {
         var data = scene.cache.json.get(map);
 
+        this.desc = data.properties[0].value;
+        
         this.tileWidthHalf = 32;
         this.tileHeightHalf = 16;
 

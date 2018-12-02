@@ -48,7 +48,7 @@ class Level extends Phaser.Scene {
         this.cameras.main.setZoom(1);
 
         // Create GUI
-        this.gui = new GUI(this);
+        this.gui = new GUI(this, this.map);
         this.gui.update(this.player);
         this.dark = this.add.rectangle(0, 0, 896 * 2, 504 * 2, 0x000000).setScrollFactor(0).setAlpha(0).setDepth(2000);
 
@@ -87,7 +87,7 @@ class Level extends Phaser.Scene {
                     this.dark.setDepth(1499);
                     var tween = this.tweens.add({
                         targets: [this.dark, this.gui.r1],
-                        alpha: 0.5,
+                        alpha: 0.25,
                         ease: 'Power1',
                         duration: 350,
                         repeat: 0,

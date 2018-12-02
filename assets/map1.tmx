@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.2" tiledversion="1.2.0" orientation="isometric" renderorder="right-down" width="8" height="8" tilewidth="64" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
+ <properties>
+  <property name="desc">Use TAB and
+arrows to edit
+your stats.</property>
+ </properties>
  <tileset firstgid="1" name="tileset" tilewidth="64" tileheight="64" tilecount="5" columns="5">
   <image source="tileset.png" width="320" height="64"/>
  </tileset>

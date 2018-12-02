@@ -4,7 +4,7 @@ const GUI_Y = [32, 80, 344];
 
 class GUI {
 
-    constructor(scene) {
+    constructor(scene, map) {
 
         // SCORE
         scene.add.rectangle(GUI_OFFSET, GUI_Y[0], 240, 32, 0xffffff).setOrigin(0).setDepth(1500);
@@ -24,7 +24,7 @@ class GUI {
 
         // TEXT
         scene.add.rectangle(GUI_OFFSET, GUI_Y[2], 240, 128, 0xffffff).setOrigin(0).setDepth(1500);
-        this.addText(scene, 16, GUI_Y[2], '48px', "This stage is\nreally hard.\nGood luck :)").setLineSpacing(-16);
+        this.addText(scene, 16, GUI_Y[2], '48px', map.desc).setLineSpacing(-16);
 
         // Cameras
         var guiCam0 = scene.cameras.add(32, GUI_Y[0], 240, 0);
