@@ -7,6 +7,7 @@ class Player {
         this.block = 0;
         this.pos = [0, 0];
         this.nextPos = [];
+        this.finishedLevel = false;
     }
 
     init(x, y, scene) {
@@ -62,7 +63,7 @@ class Player {
 
         // The level is over
         if (this.pos[0] == map.goal[0] && this.pos[1] == map.goal[1]) {
-            console.log('yeah');
+            this.finishedLevel = true;
         }
 
     }

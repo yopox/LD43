@@ -4,14 +4,23 @@ class Level extends Phaser.Scene {
 
     constructor() {
         super({ key: 'level' });
+
+        // Main UI
         this.player = null;
         this.map = null;
         this.guiCam = null;
         this.gui = null;
+
+        // Zoom
         this.zoomState = 0;
         this.ZKey = null;
         this.canZoom = true;
+        
+        // Popup
         this.blockMove = false;
+        this.dark = null;
+        this.SKey = null;
+        this.distribStats = null;
     }
 
     preload() {
@@ -35,6 +44,9 @@ class Level extends Phaser.Scene {
 
         this.zoom();
         this.ZKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
+        this.SKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+
+        this.dark = this.add.rectangle(0, 0, 896*2, 504*2, 0x000000).setScrollFactor(0).setAlpha(0).setDepth(2000);
 
     }
 
@@ -63,10 +75,23 @@ class Level extends Phaser.Scene {
             if (this.ZKey.isDown) {
                 if (this.canZoom && !this.cameras.main.zoomEffect.isRunning) {
                     this.canZoom = false;
-                    this.zoom();
+                    // this.zoom();
                 }
             } else {
                 this.canZoom = true;
+            }
+
+            // Stats
+            if (this.player.finishedLevel && this.player.block == 4) {
+                this.blockMove = true;
+                this.tweens.add({
+                    targets: this.dark,
+                    alpha: 0.75,
+                    ease: 'Power1',
+                    duration: 500,
+                    repeat: 0,
+                    onComplete: this.tweenOver
+                });
             }
 
         } else {
@@ -74,6 +99,10 @@ class Level extends Phaser.Scene {
 
         }
 
+    }
+
+    tweenOver() {
+        console.log(this.map);
     }
 
     zoom() {
