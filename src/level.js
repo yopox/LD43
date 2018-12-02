@@ -3,7 +3,8 @@ var controls;
 const STATES = {
     STATS: 0,
     MOVE: 1,
-    WON: 2
+    WON: 2,
+    TWEEN: 3
 };
 
 class Level extends Phaser.Scene {
@@ -27,7 +28,7 @@ class Level extends Phaser.Scene {
         // Popup
         this.blockMove = false;
         this.dark = null;
-        this.SKey = null;
+        this.TABKey = null;
         this.distribStats = null;
     }
 
@@ -45,14 +46,13 @@ class Level extends Phaser.Scene {
         // Create player
         this.player = new Player();
         this.player.init(this.map.startingPos[0], this.map.startingPos[1], this);
-
+        this.cameras.main.startFollow(this.player.sprite, false, 1, 1, -32, -32);
+        
         // Create GUI
         this.gui = new GUI(this);
         this.gui.update(this.player);
 
-        this.zoom();
-        this.ZKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
-        this.SKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        this.TABKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
 
         this.dark = this.add.rectangle(0, 0, 896 * 2, 504 * 2, 0x000000).setScrollFactor(0).setAlpha(0).setDepth(2000);
 
@@ -79,19 +79,24 @@ class Level extends Phaser.Scene {
                     this.player.move(this.map, dir.DOWN);
                 }
 
-                // Zoom
-                if (this.ZKey.isDown) {
-                    if (this.canZoom && !this.cameras.main.zoomEffect.isRunning) {
-                        this.canZoom = false;
-                        // this.zoom();
-                    }
-                } else {
-                    this.canZoom = true;
+                // Edit stats
+                if (this.TABKey.isDown && this.player.block == 0) {
+                    this.state = STATES.TWEEN;
+                    this.dark.setDepth(1499);
+                    var tween = this.tweens.add({
+                        targets: this.dark,
+                        alpha: 0.5,
+                        ease: 'Power1',
+                        duration: 500,
+                        repeat: 0,
+                    });
+                    tween.setCallback("onComplete", function (scene) { scene.state = STATES.STATS }, [this,]);
                 }
 
                 // Stats
                 if (this.player.finishedLevel && this.player.block == 4) {
                     this.blockMove = true;
+                    this.dark.setDepth(2000);
                     var tween = this.tweens.add({
                         targets: this.dark,
                         alpha: 0.75,
@@ -99,11 +104,23 @@ class Level extends Phaser.Scene {
                         duration: 500,
                         repeat: 0,
                     });
-                    tween.setCallback("onComplete", function (lvl) { lvl.tweenOver() }, [this,]);
+                    tween.setCallback("onComplete", function (scene) { scene.tweenOver() }, [this,]);
                 }
                 break;
 
             case STATES.STATS:
+                if (this.TABKey.isDown) {
+                    this.state = STATES.TWEEN;
+                    var tween = this.tweens.add({
+                        targets: this.dark,
+                        alpha: 0,
+                        ease: 'Power1',
+                        duration: 500,
+                        repeat: 0,
+                    });
+                    tween.setCallback("onComplete", function (scene) { scene.state = STATES.MOVE }, [this,]);
+                }
+                
                 break;
             case STATES.WON:
                 break;
@@ -115,28 +132,6 @@ class Level extends Phaser.Scene {
         console.log(this);
         console.log(this instanceof Level);
         console.log(this.map);
-    }
-
-    zoom() {
-        switch (this.zoomState) {
-            case 0:
-                this.cameras.main.startFollow(this.player.sprite, false, 1, 1, -32, -32);
-                this.cameras.main.zoomTo(1, 350);
-                break;
-
-            case 1:
-                var w = this.map.width * 64;
-                var h = this.map.height * 32;
-                this.cameras.main.stopFollow();
-                this.cameras.main.pan(0, this.map.height * 32 - 16, 350);
-                if (w >= h) {
-                    this.cameras.main.zoomTo(896 / w, 350);
-                } else {
-                    this.cameras.main.zoomTo(504 / h, 350);
-                }
-                break;
-        }
-        this.zoomState = 1 - this.zoomState;
     }
 
 }
