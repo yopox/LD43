@@ -2,12 +2,15 @@ class Player {
 
     constructor() {
         this.stats = [0, 0, 0];
-        this.points = 11;
+        this.points = 20;
+        this.score = 0;
+        this.sacrifices = 0;
         this.sprite = null;
         this.block = 0;
         this.pos = [0, 0];
         this.nextPos = [];
         this.finishedLevel = false;
+        this.gameOver = false;
     }
 
     init(x, y, scene) {
@@ -36,8 +39,10 @@ class Player {
         var cost = moveCost(nPos, map);
 
         // The player can't move
-        if (this.block || oob(nPos, map) || checkCollision(nPos, map) || this.stats[0] < cost)
+        if (this.block || oob(nPos, map) || checkCollision(nPos, map) || this.stats[0] < cost) {
+            // console.log(`Player can't move : \n - block=${this.block}\n - oob=${oob(nPos, map)}\n - checkcollision=${checkCollision(nPos, map)}\n - cost=${cost}, stats=${this.stats[0]} )`);
             return false;
+        }
 
         // Let's move
         this.block = 24;
@@ -60,19 +65,31 @@ class Player {
 
         // Update stats
         this.stats[0] -= cost;
+        this.score += this.stats[2];
 
         // The level is over
         if (this.pos[0] == map.goal[0] && this.pos[1] == map.goal[1]) {
             this.finishedLevel = true;
+        } else if (this.points == 0 && this.stats[0] == 0 && (this.stats[1] + this.stats[2]) < PENALTY) {
+            this.gameOver = true;
         }
 
     }
 
-    reset() {
-        if (this.stats[0] > 0 || this.stats[1] > 0 || this.stats[2] > 0) {
+    canSacrifice() {
+        return this.stats[0] > 0 || this.stats[1] > 0 || this.stats[2] > 0
+    }
+
+    reset(scene) {
+        if (this.canSacrifice()) {
             this.points += this.stats[0] + this.stats[1] + this.stats[2];
             this.stats = [0, 0, 0];
             this.points = Math.max(0, this.points - PENALTY);
+            scene.cameras.main.shake(250, 0.005);
+            this.sacrifices++;
+        }
+        if (this.points == 0 && this.stats[0] == 0 && (this.stats[1] + this.stats[2]) < PENALTY) {
+            this.gameOver = true;
         }
     }
 
