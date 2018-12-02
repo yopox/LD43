@@ -98,6 +98,12 @@ class Level extends Phaser.Scene {
                     this.dark.setDepth(1499);
                     this.fadeTo([this.dark, this.gui.r1], 0.25, STATES.STATS);
                 }
+                else if (Phaser.Input.Keyboard.JustDown(this.RKey) && this.player.canSacrifice()) {
+                    this.gui.selected = 0;
+                    this.dark.setDepth(1499);
+                    this.sacrifice();
+                    this.fadeTo([this.dark, this.gui.r1], 0.25, STATES.STATS);
+                }
 
                 // The player won
                 if (this.player.finishedLevel && this.player.block == 4) {
@@ -105,9 +111,10 @@ class Level extends Phaser.Scene {
                     this.openPopup();
                     this.fadeTo(this.dark, 0.25, STATES.WON);
                 }
-
+                
                 // The player lost
                 if (this.player.gameOver && this.player.block == 4) {
+                    this.openPopup();
                     this.fadeTo(this.dark, 0.25, STATES.GAME_OVER);
                 }
 
@@ -135,10 +142,7 @@ class Level extends Phaser.Scene {
                     }
                 }
                 else if (Phaser.Input.Keyboard.JustDown(this.RKey)) {
-                    this.player.reset(this);
-                    if (this.player.gameOver) {
-                        this.fadeTo(this.dark, 0.25, STATES.GAME_OVER);
-                    }
+                    this.sacrifice();
                 }
 
                 this.gui.update(this.player);
@@ -154,7 +158,18 @@ class Level extends Phaser.Scene {
                 if (this.SPACEKey.isDown) {
                     this.scene.start("levelSelect");
                 }
+                else if (Phaser.Input.Keyboard.JustDown(this.RKey)) {
+                    this.scene.start("level", {lvlNumber: 1});
+                }
                 break;
+        }
+    }
+
+    sacrifice() {
+        this.player.reset(this);
+        if (this.player.gameOver) {
+            this.fadeTo(this.dark, 0.25, STATES.GAME_OVER);
+            this.openPopup();
         }
     }
 
@@ -167,13 +182,13 @@ class Level extends Phaser.Scene {
             duration: 350,
             repeat: 0
         });
-        tween.setCallback("onComplete", function (scene) { scene.state = state }, [this,]);
+        tween.setCallback("onComplete", function (scene) { if (scene.state != STATES.GAME_OVER) scene.state = state }, [this,]);
     }
 
     openPopup() {
         var targets = [];
 
-        switch (this.player.over) {
+        switch (this.player.gameOver) {
             case true:
                 this.popup.title.text = GAME_OVER_TEXT;
                 targets = [this.popup.bg, this.popup.title, this.popup.GOline1, this.popup.GOline2];

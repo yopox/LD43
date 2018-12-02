@@ -76,8 +76,12 @@ class Player {
 
     }
 
+    canSacrifice() {
+        return this.stats[0] > 0 || this.stats[1] > 0 || this.stats[2] > 0
+    }
+
     reset(scene) {
-        if (this.stats[0] > 0 || this.stats[1] > 0 || this.stats[2] > 0) {
+        if (this.canSacrifice()) {
             this.points += this.stats[0] + this.stats[1] + this.stats[2];
             this.stats = [0, 0, 0];
             this.points = Math.max(0, this.points - PENALTY);
