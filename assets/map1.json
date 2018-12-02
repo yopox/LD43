@@ -21,6 +21,11 @@
          "name":"desc",
          "type":"string",
          "value":"Use TAB and\narrows to edit\nyour stats."
+        }, 
+        {
+         "name":"score",
+         "type":"int",
+         "value":111
         }],
  "renderorder":"right-down",
  "tiledversion":"1.2.0",

@@ -1,4 +1,5 @@
 const STATS = ["Stamina", "Strength", "Wisdom"];
+const RESET_TEXT = "Press R to reset";
 const GUI_OFFSET = 128 * 16;
 const GUI_Y = [32, 80, 344];
 
@@ -8,26 +9,26 @@ class GUI {
 
         // SCORE
         scene.add.rectangle(GUI_OFFSET, GUI_Y[0], 240, 32, 0xffffff).setOrigin(0).setDepth(1500);
-        this.score = this.addText(scene, 16, GUI_Y[0]- 16, '48px', "Score : 0");
+        this.score = this.addText(scene, 16, GUI_Y[0]- 16, '48px', "");
 
         // STATS
         scene.add.rectangle(GUI_OFFSET, GUI_Y[1], 240, 248, 0xffffff).setOrigin(0).setDepth(1500);
         this.addText(scene, 16, GUI_Y[1] - 16, '64px', "STATS");
-        this.left = this.addText(scene, 16, GUI_Y[1] + 16 * 2, '48px', "Left : 1");
-        this.text1 = this.addText(scene, 16, GUI_Y[1] + 16 * 5, '48px', "1");
+        this.left = this.addText(scene, 16, GUI_Y[1] + 16 * 2, '48px', "");
+        this.text1 = this.addText(scene, 16, GUI_Y[1] + 16 * 5, '48px', "");
         this.r1 = scene.add.rectangle(GUI_OFFSET, GUI_Y[1] + 16 * 6, 240, 32, 0xdddddd).setAlpha(0).setOrigin(0).setDepth(1501);
-        this.text2 = this.addText(scene, 16, GUI_Y[1] + 16 * 7, '48px', "1");
+        this.text2 = this.addText(scene, 16, GUI_Y[1] + 16 * 7, '48px', "");
         this.r2 = scene.add.rectangle(GUI_OFFSET, GUI_Y[1] + 16 * 8, 240, 32, 0xdddddd).setAlpha(0).setOrigin(0).setDepth(1501);
-        this.text3 = this.addText(scene, 16, GUI_Y[1] + 16 * 9, '48px', "1");
+        this.text3 = this.addText(scene, 16, GUI_Y[1] + 16 * 9, '48px', "");
         this.r3 = scene.add.rectangle(GUI_OFFSET, GUI_Y[1] + 16 * 10, 240, 32, 0xdddddd).setAlpha(0).setOrigin(0).setDepth(1501);
-        this.addText(scene, 16, GUI_Y[1] + 16 * 12, '48px', "R : reset (-2)");
+        this.addText(scene, 16, GUI_Y[1] + 16 * 12, '48px', RESET_TEXT);
 
         // TEXT
         scene.add.rectangle(GUI_OFFSET, GUI_Y[2], 240, 128, 0xffffff).setOrigin(0).setDepth(1500);
         this.addText(scene, 16, GUI_Y[2], '48px', map.desc).setLineSpacing(-16);
 
         // Cameras
-        var guiCam0 = scene.cameras.add(32, GUI_Y[0], 240, 0);
+        var guiCam0 = scene.cameras.add(32, GUI_Y[0], 240, 32);
         guiCam0.scrollX = GUI_OFFSET;
         guiCam0.scrollY = GUI_Y[0];
         var guiCam1 = scene.cameras.add(32, GUI_Y[1], 240, 248);
@@ -42,7 +43,7 @@ class GUI {
     }
 
     update(player) {
-        this.score.text = "Score : " + player.score;
+        this.score.text = "Points : " + player.score;
         this.left.text = "Left : " + player.points;
         this.text1.text = STATS[0] + " : " + player.stats[0];
         this.text2.text = STATS[1] + " : " + player.stats[1];

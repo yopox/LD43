@@ -19,6 +19,7 @@ class Level extends Phaser.Scene {
         this.map = null;
         this.guiCam = null;
         this.gui = null;
+        this.popup = null;
 
         // Zoom
         this.zoomState = 0;
@@ -59,7 +60,8 @@ class Level extends Phaser.Scene {
         // Create GUI
         this.gui = new GUI(this, this.map);
         this.gui.update(this.player);
-        this.dark = this.add.rectangle(0, 0, 896 * 2, 504 * 2, 0x000000).setScrollFactor(0).setAlpha(0).setDepth(2000);
+        this.popup = new Popup(this);
+        this.dark = this.add.rectangle(0, 0, this.map.width * 200, this.map.height * 200, 0x000000).setAlpha(0).setDepth(2000);
 
         // Keyboard
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -100,6 +102,7 @@ class Level extends Phaser.Scene {
                 // The player won
                 if (this.player.finishedLevel && this.player.block == 4) {
                     this.dark.setDepth(2000);
+                    this.openPopup();
                     this.fadeTo(this.dark, 0.25, STATES.WON);
                 }
 
@@ -132,7 +135,7 @@ class Level extends Phaser.Scene {
                     }
                 }
                 else if (Phaser.Input.Keyboard.JustDown(this.RKey)) {
-                    this.player.reset();
+                    this.player.reset(this);
                     if (this.player.gameOver) {
                         this.fadeTo(this.dark, 0.25, STATES.GAME_OVER);
                     }
@@ -162,8 +165,34 @@ class Level extends Phaser.Scene {
             alpha: alpha,
             ease: 'Power1',
             duration: 350,
-            repeat: 0,
+            repeat: 0
         });
         tween.setCallback("onComplete", function (scene) { scene.state = state }, [this,]);
+    }
+
+    openPopup() {
+        var targets = [];
+
+        switch (this.player.over) {
+            case true:
+                this.popup.title.text = GAME_OVER_TEXT;
+                targets = [this.popup.bg, this.popup.title, this.popup.GOline1, this.popup.GOline2];
+                break;
+
+            default:
+                this.popup.title.text = WIN_TEXT;
+                this.popup.Wline1.text = this.player.sacrifices + ' sacrifices - ' + this.player.score + ' points';
+                this.popup.Wline2.text = Math.round(this.player.score / this.map.score * 100) + "%";
+                targets = [this.popup.bg, this.popup.title, this.popup.Wline1, this.popup.Wline2, this.popup.Wline3];
+                break;
+        }
+
+        var tween = this.tweens.add({
+            targets: targets,
+            props: {
+                y: { value: '-=64', duration: 350, ease: 'Power1' },
+                alpha: { value: '+=1', duration: 350, ease: 'Power1' }
+            },
+        });
     }
 }
