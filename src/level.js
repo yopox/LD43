@@ -82,12 +82,13 @@ class Level extends Phaser.Scene {
                 // Edit stats
                 if (this.TABKey.isDown && this.player.block == 0) {
                     this.state = STATES.TWEEN;
+                    this.gui.selected = 0;
                     this.dark.setDepth(1499);
                     var tween = this.tweens.add({
-                        targets: this.dark,
+                        targets: [this.dark, this.gui.r1],
                         alpha: 0.5,
                         ease: 'Power1',
-                        duration: 500,
+                        duration: 350,
                         repeat: 0,
                     });
                     tween.setCallback("onComplete", function (scene) { scene.state = STATES.STATS }, [this,]);
@@ -109,18 +110,34 @@ class Level extends Phaser.Scene {
                 break;
 
             case STATES.STATS:
+                // Go back to MOVE state
                 if (this.TABKey.isDown) {
                     this.state = STATES.TWEEN;
                     var tween = this.tweens.add({
-                        targets: this.dark,
+                        targets: [this.dark, this.gui.r1, this.gui.r2, this.gui.r3],
                         alpha: 0,
                         ease: 'Power1',
-                        duration: 500,
+                        duration: 350,
                         repeat: 0,
                     });
                     tween.setCallback("onComplete", function (scene) { scene.state = STATES.MOVE }, [this,]);
                 }
-                
+
+                // Change selected stat
+                if (Phaser.Input.Keyboard.JustDown(cursors.up)) {
+                    this.gui.move(-1);
+                }
+                else if (Phaser.Input.Keyboard.JustDown(cursors.down)) {
+                    this.gui.move(1);
+                }
+                else if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
+                    if (this.player.points > 0) {
+                        this.player.points--;
+                        this.player.stats[this.gui.selected]++;
+                    }
+                }
+
+                this.gui.update(this.player);
                 break;
             case STATES.WON:
                 break;
