@@ -106,7 +106,7 @@ class Level extends Phaser.Scene {
                         duration: 500,
                         repeat: 0,
                     });
-                    tween.setCallback("onComplete", function (scene) { scene.tweenOver() }, [this,]);
+                    tween.setCallback("onComplete", function (scene) { scene.levelComplete() }, [this,]);
                 }
                 break;
 
@@ -150,11 +150,9 @@ class Level extends Phaser.Scene {
         }
     }
 
-    tweenOver() {
-        console.log("tweenOver");
-        console.log(this);
-        console.log(this instanceof Level);
-        console.log(this.map);
+    levelComplete() {
+        this.input.keyboard.on("keydown_SPACE", function (){
+            this.scene.start("title");
+        }, this)
     }
-
 }
