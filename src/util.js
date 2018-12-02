@@ -1,4 +1,4 @@
-const groundCOLL = [5];
+const groundCOLL = [5, 0];
 const PENALTY = 2;
 const LEVEL_NUMBER = 1;
 
@@ -23,8 +23,9 @@ function checkCollision(pos, map) {
 // How much moving there will cost
 function moveCost(pos, map) {
 
-    switch (map.layers[0].data[pos[1] * 8 + pos[0]]) {
-        case 2:
+    switch (map.layers[0].data[pos[1] * map.width + pos[0]]) {
+        case 3:
+        case 4:
             return 2;
         default:
             return 1;

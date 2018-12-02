@@ -7,7 +7,7 @@ class Tilemap {
         this.score = data.properties[1].value;
 
         console.log(data.properties);
-        
+
         this.tileWidthHalf = 47;
         this.tileHeightHalf = 27;
 
@@ -31,19 +31,21 @@ class Tilemap {
 
     buildMap(scene) {
         var centerX = 0;
-        var centerY = this.height * this.tileHeightHalf;
+        var centerY = 0;
         var layer = this.layers[0].data;
-        
+
         var i = 0;
         for (var y = 0; y < this.height; y++) {
             for (var x = 0; x < this.width; x++) {
                 var id = layer[i] - 1;
-    
+
                 var tx = (x - y) * this.tileWidthHalf;
                 var ty = (x + y) * this.tileHeightHalf;
-    
-                var tile = scene.add.image(centerX + tx, centerY + ty, 'tiles', id);
-                tile.depth = centerY + ty;
+
+                if (id >= 0) {
+                    var tile = scene.add.image(centerX + tx, centerY + ty, 'tiles', id);
+                    tile.depth = centerY + ty;
+                }
                 i++;
             }
         }
