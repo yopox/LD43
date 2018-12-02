@@ -11,6 +11,7 @@ class Level extends Phaser.Scene {
         this.zoomState = 0;
         this.ZKey = null;
         this.canZoom = true;
+        this.blockMove = false;
     }
 
     preload() {
@@ -30,6 +31,7 @@ class Level extends Phaser.Scene {
 
         // Create GUI
         this.gui = new GUI(this);
+        this.gui.update(this.player);
 
         this.zoom();
         this.ZKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
@@ -37,31 +39,39 @@ class Level extends Phaser.Scene {
     }
 
     update() {
-        this.player.update();
-        this.gui.update(this.player);
 
-        // Moving the player
-        if (cursors.left.isDown) {
-            this.player.move(this.map, dir.LEFT);
-        }
-        else if (cursors.right.isDown) {
-            this.player.move(this.map, dir.RIGHT);
-        }
-        else if (cursors.up.isDown) {
-            this.player.move(this.map, dir.UP);
-        }
-        else if (cursors.down.isDown) {
-            this.player.move(this.map, dir.DOWN);
-        }
+        if (!this.blockMove) {
 
-        // Zoom
-        if (this.ZKey.isDown) {
-            if (this.canZoom && !this.cameras.main.zoomEffect.isRunning) {
-                this.canZoom = false;
-                this.zoom();
+            this.player.update();
+            this.gui.update(this.player);
+
+            // Moving the player
+            if (cursors.left.isDown) {
+                this.player.move(this.map, dir.LEFT);
             }
+            else if (cursors.right.isDown) {
+                this.player.move(this.map, dir.RIGHT);
+            }
+            else if (cursors.up.isDown) {
+                this.player.move(this.map, dir.UP);
+            }
+            else if (cursors.down.isDown) {
+                this.player.move(this.map, dir.DOWN);
+            }
+
+            // Zoom
+            if (this.ZKey.isDown) {
+                if (this.canZoom && !this.cameras.main.zoomEffect.isRunning) {
+                    this.canZoom = false;
+                    this.zoom();
+                }
+            } else {
+                this.canZoom = true;
+            }
+
         } else {
-            this.canZoom = true;
+            // Control popups
+
         }
 
     }

@@ -1,11 +1,11 @@
-const STATS = ["Stamina", "STAT2", "STAT3"];
+const STATS = ["Stamina", "Strength", "Luck"];
 
 class GUI {
 
     constructor(scene) {
-        this.text1 = this.addText(scene, 16, 32, '64px', "1");
-        this.text2 = this.addText(scene, 16, 32 * 2, '64px', "1");
-        this.text3 = this.addText(scene, 16, 32 * 3, '64px', "1");
+        this.text1 = this.addText(scene, 16, 16, '64px', "1");
+        this.text2 = this.addText(scene, 16, 16 * 3, '64px', "1");
+        this.text3 = this.addText(scene, 16, 16 * 5, '64px', "1");
     }
 
     update(player) {
