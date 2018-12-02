@@ -34,7 +34,7 @@ class Level extends Phaser.Scene {
     }
 
     preload() {
-        console.log("Level");
+        console.log("Level " + this.lvlNumber);
     }
 
     create() {
@@ -154,7 +154,7 @@ class Level extends Phaser.Scene {
                     this.scene.start("levelSelect");
                 }
                 else if (Phaser.Input.Keyboard.JustDown(this.RKey)) {
-                    this.scene.start("level", {lvlNumber: 1});
+                    this.scene.start("level", {lvlNumber: this.lvlNumber});
                 }
                 break;
         }
