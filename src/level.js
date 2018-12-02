@@ -17,6 +17,7 @@ class Level extends Phaser.Scene {
         this.map = null;
         this.guiCam = null;
         this.gui = null;
+        this.points = 0;
 
         // Zoom
         this.zoomState = 0;
@@ -43,13 +44,14 @@ class Level extends Phaser.Scene {
         // Create player
         this.player = new Player();
         this.player.init(this.map.startingPos[0], this.map.startingPos[1], this);
-        this.cameras.main.startFollow(this.player.sprite, false, 1, 1, -32, -32);
+        this.cameras.main.startFollow(this.player.sprite, false, 1, 1, -32 + 157, -32);
+        this.cameras.main.setZoom(1);
 
         // Create GUI
         this.gui = new GUI(this);
         this.gui.update(this.player);
         this.dark = this.add.rectangle(0, 0, 896 * 2, 504 * 2, 0x000000).setScrollFactor(0).setAlpha(0).setDepth(2000);
-        
+
         // Keyboard
         cursors = this.input.keyboard.createCursorKeys();
         RKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
@@ -137,7 +139,7 @@ class Level extends Phaser.Scene {
                 }
                 else if (Phaser.Input.Keyboard.JustDown(RKey)) {
                     console.log(2154);
-                    
+
                     this.player.reset();
                 }
 
