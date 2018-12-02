@@ -1,5 +1,6 @@
 const groundCOLL = [3];
 const PENALTY = 2;
+const LEVEL_NUMBER = 1;
 
 const dir = {
     LEFT: [-1, 0],
