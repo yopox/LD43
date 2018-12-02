@@ -1,4 +1,4 @@
-const groundCOLL = [3];
+const groundCOLL = [5];
 const PENALTY = 2;
 const LEVEL_NUMBER = 1;
 
@@ -15,7 +15,7 @@ function oob(pos, map) {
 
 // True if there is a collision
 function checkCollision(pos, map) {
-    var collGround = groundCOLL.includes(map.layers[0].data[pos[1] * 8 + pos[0]]);
+    var collGround = groundCOLL.includes(map.layers[0].data[pos[1] * map.width + pos[0]]);
 
     return collGround;
 }

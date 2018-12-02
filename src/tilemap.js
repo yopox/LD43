@@ -8,9 +8,8 @@ class Tilemap {
 
         console.log(data.properties);
         
-        
-        this.tileWidthHalf = 32;
-        this.tileHeightHalf = 16;
+        this.tileWidthHalf = 47;
+        this.tileHeightHalf = 27;
 
         this.layers = data.layers;
 
@@ -22,9 +21,9 @@ class Tilemap {
 
         for (let i = 0; i < this.layers[0].data.length; i++) {
             var j = Math.floor(i / this.width);
-            if (this.layers[0].data[i] == 4) {
+            if (this.layers[0].data[i] == 6) {
                 this.startingPos = [i % this.width, j];
-            } else if (this.layers[0].data[i] == 5) {
+            } else if (this.layers[0].data[i] == 7) {
                 this.goal = [i % this.width, j];
             }
         }
