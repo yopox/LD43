@@ -7,10 +7,11 @@ const STATES = {
 
 class Level extends Phaser.Scene {
 
-    constructor() {
+    constructor(data) {
         super({ key: 'level' });
 
         this.state = STATES.MOVE;
+        this.lvlNumber = 0;
 
         // Main UI
         this.player = null;
@@ -32,13 +33,18 @@ class Level extends Phaser.Scene {
         this.distribStats = null;
     }
 
+    init(data){
+        this.data = data;
+        this.lvlNumber = data["lvlNumber"];
+    }
+
     preload() {
         console.log("Level");
     }
 
     create() {
         // Create tilemap
-        this.map = new Tilemap('map1', this);
+        this.map = new Tilemap(`map${this.lvlNumber}`, this);
         this.map.buildMap(this);
 
         // Create player
@@ -53,8 +59,8 @@ class Level extends Phaser.Scene {
         this.dark = this.add.rectangle(0, 0, 896 * 2, 504 * 2, 0x000000).setScrollFactor(0).setAlpha(0).setDepth(2000);
 
         // Keyboard
-        cursors = this.input.keyboard.createCursorKeys();
-        RKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        this.cursors = this.input.keyboard.createCursorKeys();
+        this.RKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.TABKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
 
     }
@@ -67,16 +73,16 @@ class Level extends Phaser.Scene {
                 this.gui.update(this.player);
 
                 // Moving the player
-                if (cursors.left.isDown) {
+                if (this.cursors.left.isDown) {
                     this.player.move(this.map, dir.LEFT);
                 }
-                else if (cursors.right.isDown) {
+                else if (this.cursors.right.isDown) {
                     this.player.move(this.map, dir.RIGHT);
                 }
-                else if (cursors.up.isDown) {
+                else if (this.cursors.up.isDown) {
                     this.player.move(this.map, dir.UP);
                 }
-                else if (cursors.down.isDown) {
+                else if (this.cursors.down.isDown) {
                     this.player.move(this.map, dir.DOWN);
                 }
 
@@ -125,19 +131,19 @@ class Level extends Phaser.Scene {
                 }
 
                 // Change selected stat
-                if (Phaser.Input.Keyboard.JustDown(cursors.up)) {
+                if (Phaser.Input.Keyboard.JustDown(this.cursors.up)) {
                     this.gui.move(-1);
                 }
-                else if (Phaser.Input.Keyboard.JustDown(cursors.down)) {
+                else if (Phaser.Input.Keyboard.JustDown(this.cursors.down)) {
                     this.gui.move(1);
                 }
-                else if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
+                else if (Phaser.Input.Keyboard.JustDown(this.cursors.right)) {
                     if (this.player.points > 0) {
                         this.player.points--;
                         this.player.stats[this.gui.selected]++;
                     }
                 }
-                else if (Phaser.Input.Keyboard.JustDown(RKey)) {
+                else if (Phaser.Input.Keyboard.JustDown(this.RKey)) {
                     console.log(2154);
 
                     this.player.reset();
@@ -152,7 +158,7 @@ class Level extends Phaser.Scene {
 
     levelComplete() {
         this.input.keyboard.on("keydown_SPACE", function (){
-            this.scene.start("title");
+            this.scene.start("levelSelect");
         }, this)
     }
 }

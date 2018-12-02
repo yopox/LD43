@@ -1,7 +1,7 @@
 class Player {
 
     constructor() {
-        this.stats = [0, 0, 0];
+        this.stats = [100, 0, 0];
         this.points = 11;
         this.sprite = null;
         this.block = 0;
@@ -36,8 +36,10 @@ class Player {
         var cost = moveCost(nPos, map);
 
         // The player can't move
-        if (this.block || oob(nPos, map) || checkCollision(nPos, map) || this.stats[0] < cost)
+        if (this.block || oob(nPos, map) || checkCollision(nPos, map) || this.stats[0] < cost) {
+            // console.log(`Player can't move : \n - block=${this.block}\n - oob=${oob(nPos, map)}\n - checkcollision=${checkCollision(nPos, map)}\n - cost=${cost}, stats=${this.stats[0]} )`);
             return false;
+        }
 
         // Let's move
         this.block = 24;
@@ -71,7 +73,7 @@ class Player {
     reset() {
         if (this.stats[0] > 0 || this.stats[1] > 0 || this.stats[2] > 0) {
             this.points += this.stats[0] + this.stats[1] + this.stats[2];
-            this.stats = [0, 0, 0];
+            this.stats = [100, 0, 0];
             this.points = Math.max(0, this.points - PENALTY);
         }
     }
