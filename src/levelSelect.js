@@ -14,9 +14,11 @@ class LevelSelect extends Phaser.Scene {
             {fontFamily: 'm3x6', fontSize: '48px', color: '#000000', width: 300, align: 'center'})
 
         for (let i = 1; i <= LEVEL_NUMBER; i++)
-            this.add.sprite(320, 128, "lvl" + i).setInteractive().on('pointerdown', function () {
-                this.scene.start("level", {lvlNumber: i});
-            }, this);
+            this.add.image(320, 128, "lvl" + i)
+                .setInteractive()
+                .on('pointerdown', function () {
+                    this.scene.start("level", {lvlNumber: i});
+                }, this);
     }
 
     update() {
