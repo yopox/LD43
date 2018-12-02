@@ -15,7 +15,8 @@ class Player {
 
     init(x, y, scene) {
         this.pos = [x, y];
-        this.sprite = scene.add.sprite((x - y - 1) * 32, (x + y + 3.5) * 16, 'player', 0);
+        
+        this.sprite = scene.add.sprite((x - y) * 47 - 26, (x + y) * 27 + 48, 'player', 0);
         this.sprite.setOrigin(0, 0);
         this.sprite.depth = 1000;
     }
@@ -26,6 +27,8 @@ class Player {
 
             if (this.nextPos.length && this.block % 2 == 0) {
                 var nP = this.nextPos.pop();
+                console.log(nP);
+                
                 this.sprite.x += nP[1];
                 this.sprite.y += nP[2];
                 this.sprite.setFrame(nP[0]);
@@ -45,21 +48,21 @@ class Player {
         }
 
         // Let's move
-        this.block = 24;
+        this.block = 30;
         this.pos = nPos;
 
         switch (direction) {
             case dir.UP:
-                this.nextPos = [[1, 0, 0], [2, 8, -4], [3, 8, -4], [4, 4, -2], [5, 4, -2], [6, 4, -2], [7, 4, -2], [0, 0, 0]];
+                this.nextPos = [[1, 0, 0], [1, 0, 0], [1, 0, 0], [2, 12, -7], [2, 12, -7], [3, 6, -4], [3, 6, -3], [4, 6, -3], [4, 5, -3], [0, 0, 0]].reverse();
                 break;
             case dir.DOWN:
-                this.nextPos = [[1, 0, 0], [2, -8, 4], [3, -8, 4], [4, -4, 2], [5, -4, 2], [6, -4, 2], [7, -4, 2], [0, 0, 0]];
+                this.nextPos = [[2*7 + 1, 0, 0], [2*7 + 1, 0, 0], [2*7 + 1, 0, 0], [2*7 + 2, -12, 7], [2*7 + 2, -12, 7], [2*7 + 3, -6, 4], [2*7 + 3, -6, 3], [2*7 + 4, -6, 3], [2*7 + 4, -6, 3], [2*7, 0, 0]].reverse();
                 break;
             case dir.LEFT:
-                this.nextPos = [[1, 0, 0], [2, -8, -4], [3, -8, -4], [4, -4, -2], [5, -4, -2], [6, -4, -2], [7, -4, -2], [0, 0, 0]];
+                this.nextPos = [[7 + 1, 0, 0], [7 + 1, 0, 0], [7 + 1, 0, 0], [7 + 2, -12, -7], [7 + 2, -12, -7], [7 + 3, -6, -4], [7 + 3, -6, -3], [7 + 4, -6, -3], [7 + 4, -5, -3], [7 + 0, 0, 0]].reverse();
                 break;
             case dir.RIGHT:
-                this.nextPos = [[1, 0, 0], [2, 8, 4], [3, 8, 4], [4, 4, 2], [5, 4, 2], [6, 4, 2], [7, 4, 2], [0, 0, 0]];
+                this.nextPos = [[3*7 + 1, 0, 0], [3*7 + 1, 0, 0], [3*7 + 1, 0, 0], [3*7 + 2, 12, 7], [3*7 + 2, 12, 7], [3*7 + 3, 6, 4], [3*7 + 3, 6, 3], [3*7 + 4, 6, 3], [3*7 + 4, 5, 3], [3*7 + 0, 0, 0]].reverse();
                 break;
         }
 

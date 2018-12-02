@@ -21,13 +21,7 @@ class Level extends Phaser.Scene {
         this.gui = null;
         this.popup = null;
 
-        // Zoom
-        this.zoomState = 0;
-        this.ZKey = null;
-        this.canZoom = true;
-
         // States
-        this.dark = null;
         this.TABKey = null;
         this.RKey = null;
         this.SPACEKey = null;
@@ -61,7 +55,6 @@ class Level extends Phaser.Scene {
         this.gui = new GUI(this, this.map);
         this.gui.update(this.player);
         this.popup = new Popup(this);
-        this.dark = this.add.rectangle(0, 0, this.map.width * 200, this.map.height * 200, 0x000000).setAlpha(0).setDepth(2000);
 
         // Keyboard
         this.cursors = this.input.keyboard.createCursorKeys();
@@ -95,27 +88,28 @@ class Level extends Phaser.Scene {
                 // Edit stats
                 if (this.TABKey.isDown && this.player.block == 0) {
                     this.gui.selected = 0;
-                    this.dark.setDepth(1499);
-                    this.fadeTo([this.dark, this.gui.r1], 0.25, STATES.STATS);
+                    this.cameras.main.fadeOut(350, 100, 100, 100);
+                    this.fadeTo(this.gui.r1, 0.25, STATES.STATS);
                 }
                 else if (Phaser.Input.Keyboard.JustDown(this.RKey) && this.player.canSacrifice()) {
                     this.gui.selected = 0;
-                    this.dark.setDepth(1499);
                     this.sacrifice();
-                    this.fadeTo([this.dark, this.gui.r1], 0.25, STATES.STATS);
+                    this.cameras.main.fadeOut(350, 100, 100, 100);
+                    this.fadeTo(this.gui.r1, 0.25, STATES.STATS);
                 }
-
+                
                 // The player won
                 if (this.player.finishedLevel && this.player.block == 4) {
-                    this.dark.setDepth(2000);
                     this.openPopup();
-                    this.fadeTo(this.dark, 0.25, STATES.WON);
+                    this.cameras.main.fadeOut(350, 100, 100, 100);
+                    this.state = STATES.WON;
                 }
                 
                 // The player lost
                 if (this.player.gameOver && this.player.block == 4) {
                     this.openPopup();
-                    this.fadeTo(this.dark, 0.25, STATES.GAME_OVER);
+                    this.cameras.main.fadeOut(350, 100, 100, 100);
+                    this.state = STATES.GAME_OVER;
                 }
 
                 break;
@@ -123,8 +117,9 @@ class Level extends Phaser.Scene {
             case STATES.STATS:
                 // Go back to MOVE state
                 if (this.TABKey.isDown) {
+                    this.cameras.main.fadeFrom(350, 100, 100, 100);
                     this.fadeTo(
-                        [this.dark, this.gui.r1, this.gui.r2, this.gui.r3],
+                        [this.gui.r1, this.gui.r2, this.gui.r3],
                         0, STATES.MOVE);
                 }
 
@@ -168,7 +163,7 @@ class Level extends Phaser.Scene {
     sacrifice() {
         this.player.reset(this);
         if (this.player.gameOver) {
-            this.fadeTo(this.dark, 0.25, STATES.GAME_OVER);
+            this.fadeTo(this.cameras.main, 0.25, STATES.GAME_OVER);
             this.openPopup();
         }
     }
@@ -202,7 +197,7 @@ class Level extends Phaser.Scene {
                 break;
         }
 
-        var tween = this.tweens.add({
+        this.tweens.add({
             targets: targets,
             props: {
                 y: { value: '-=64', duration: 350, ease: 'Power1' },
@@ -210,4 +205,5 @@ class Level extends Phaser.Scene {
             },
         });
     }
+
 }

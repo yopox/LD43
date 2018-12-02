@@ -1,24 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="isometric" renderorder="right-down" width="8" height="8" tilewidth="64" tileheight="32" infinite="0" nextlayerid="2" nextobjectid="1">
+<map version="1.2" tiledversion="1.2.0" orientation="isometric" renderorder="right-down" width="10" height="5" tilewidth="94" tileheight="54" infinite="0" nextlayerid="4" nextobjectid="1">
  <properties>
   <property name="desc">Use TAB and
 arrows to edit
 your stats.</property>
-  <property name="score" type="int" value="111"/>
+  <property name="score" type="int" value="50"/>
  </properties>
- <tileset firstgid="1" name="tileset" tilewidth="64" tileheight="64" tilecount="5" columns="5">
-  <image source="tileset.png" width="320" height="64"/>
+ <tileset firstgid="1" name="tileset" tilewidth="94" tileheight="88" tilecount="7" columns="7">
+  <image source="tileset.png" width="658" height="88"/>
  </tileset>
- <layer id="1" name="Tile Layer 1" width="8" height="8">
+ <layer id="3" name="Tile Layer 1" width="10" height="5">
   <data encoding="csv">
-2,1,2,2,3,3,3,3,
-1,1,1,2,2,3,3,3,
-1,4,1,1,2,2,3,3,
-2,1,1,3,3,2,2,3,
-3,2,1,3,3,2,2,2,
-3,3,1,1,2,2,1,2,
-3,3,3,2,2,1,5,1,
-3,3,3,3,2,2,1,2
+5,5,5,5,5,5,5,5,1,2,
+5,1,1,3,3,1,1,1,1,4,
+5,6,1,3,3,5,1,1,7,3,
+5,2,1,3,3,1,1,1,1,4,
+5,5,5,5,5,5,5,5,2,1
 </data>
  </layer>
 </map>
