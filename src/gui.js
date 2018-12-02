@@ -8,7 +8,7 @@ class GUI {
 
         // SCORE
         scene.add.rectangle(GUI_OFFSET, GUI_Y[0], 240, 32, 0xffffff).setOrigin(0).setDepth(1500);
-        this.addText(scene, 16, GUI_Y[0]- 16, '48px', "Score : 5");
+        this.score = this.addText(scene, 16, GUI_Y[0]- 16, '48px', "Score : 0");
 
         // STATS
         scene.add.rectangle(GUI_OFFSET, GUI_Y[1], 240, 248, 0xffffff).setOrigin(0).setDepth(1500);
@@ -42,6 +42,7 @@ class GUI {
     }
 
     update(player) {
+        this.score.text = "Score : " + player.score;
         this.left.text = "Left : " + player.points;
         this.text1.text = STATS[0] + " : " + player.stats[0];
         this.text2.text = STATS[1] + " : " + player.stats[1];

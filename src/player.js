@@ -2,12 +2,14 @@ class Player {
 
     constructor() {
         this.stats = [0, 0, 0];
-        this.points = 11;
+        this.points = 20;
+        this.score = 0;
         this.sprite = null;
         this.block = 0;
         this.pos = [0, 0];
         this.nextPos = [];
         this.finishedLevel = false;
+        this.gameOver = false;
     }
 
     init(x, y, scene) {
@@ -60,10 +62,13 @@ class Player {
 
         // Update stats
         this.stats[0] -= cost;
+        this.score += this.stats[2];
 
         // The level is over
         if (this.pos[0] == map.goal[0] && this.pos[1] == map.goal[1]) {
             this.finishedLevel = true;
+        } else if (this.points == 0 && this.stats[0] == 0 && (this.stats[1] + this.stats[2]) < PENALTY) {
+            this.gameOver = true;
         }
 
     }
@@ -73,6 +78,9 @@ class Player {
             this.points += this.stats[0] + this.stats[1] + this.stats[2];
             this.stats = [0, 0, 0];
             this.points = Math.max(0, this.points - PENALTY);
+        }
+        if (this.points == 0 && this.stats[0] == 0 && (this.stats[1] + this.stats[2]) < PENALTY) {
+            this.gameOver = true;
         }
     }
 

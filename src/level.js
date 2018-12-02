@@ -17,18 +17,18 @@ class Level extends Phaser.Scene {
         this.map = null;
         this.guiCam = null;
         this.gui = null;
-        this.points = 0;
 
         // Zoom
         this.zoomState = 0;
         this.ZKey = null;
         this.canZoom = true;
 
-        // Popup
+        // States
         this.blockMove = false;
         this.dark = null;
         this.TABKey = null;
         this.RKey = null;
+        this.SPACEKey = null;
         this.distribStats = null;
     }
 
@@ -37,6 +37,9 @@ class Level extends Phaser.Scene {
     }
 
     create() {
+        // Init
+        this.state = STATES.MOVE;
+
         // Create tilemap
         this.map = new Tilemap('map1', this);
         this.map.buildMap(this);
@@ -56,6 +59,7 @@ class Level extends Phaser.Scene {
         cursors = this.input.keyboard.createCursorKeys();
         RKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.TABKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
+        this.SPACEKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
     }
 
@@ -82,46 +86,25 @@ class Level extends Phaser.Scene {
 
                 // Edit stats
                 if (this.TABKey.isDown && this.player.block == 0) {
-                    this.state = STATES.TWEEN;
                     this.gui.selected = 0;
                     this.dark.setDepth(1499);
-                    var tween = this.tweens.add({
-                        targets: [this.dark, this.gui.r1],
-                        alpha: 0.25,
-                        ease: 'Power1',
-                        duration: 350,
-                        repeat: 0,
-                    });
-                    tween.setCallback("onComplete", function (scene) { scene.state = STATES.STATS }, [this,]);
+                    this.fadeTo([this.dark, this.gui.r1], 0.25, STATES.STATS);
                 }
 
                 // Stats
                 if (this.player.finishedLevel && this.player.block == 4) {
                     this.blockMove = true;
                     this.dark.setDepth(2000);
-                    var tween = this.tweens.add({
-                        targets: this.dark,
-                        alpha: 0.75,
-                        ease: 'Power1',
-                        duration: 500,
-                        repeat: 0,
-                    });
-                    tween.setCallback("onComplete", function (scene) { scene.levelComplete() }, [this,]);
+                    this.fadeTo(this.dark, 0.25, STATES.WON);
                 }
                 break;
 
             case STATES.STATS:
                 // Go back to MOVE state
                 if (this.TABKey.isDown) {
-                    this.state = STATES.TWEEN;
-                    var tween = this.tweens.add({
-                        targets: [this.dark, this.gui.r1, this.gui.r2, this.gui.r3],
-                        alpha: 0,
-                        ease: 'Power1',
-                        duration: 350,
-                        repeat: 0,
-                    });
-                    tween.setCallback("onComplete", function (scene) { scene.state = STATES.MOVE }, [this,]);
+                    this.fadeTo(
+                        [this.dark, this.gui.r1, this.gui.r2, this.gui.r3],
+                        0, STATES.MOVE);
                 }
 
                 // Change selected stat
@@ -131,28 +114,37 @@ class Level extends Phaser.Scene {
                 else if (Phaser.Input.Keyboard.JustDown(cursors.down)) {
                     this.gui.move(1);
                 }
+                // Spend a point
                 else if (Phaser.Input.Keyboard.JustDown(cursors.right)) {
                     if (this.player.points > 0) {
                         this.player.points--;
                         this.player.stats[this.gui.selected]++;
                     }
                 }
+                // Reset stats
                 else if (Phaser.Input.Keyboard.JustDown(RKey)) {
-                    console.log(2154);
-
                     this.player.reset();
                 }
 
                 this.gui.update(this.player);
                 break;
             case STATES.WON:
+                if (this.SPACEKey.isDown) {
+                    this.scene.start("title");
+                }
                 break;
         }
     }
 
-    levelComplete() {
-        this.input.keyboard.on("keydown_SPACE", function (){
-            this.scene.start("title");
-        }, this)
+    fadeTo(targets, alpha, state) {
+        this.state = STATES.TWEEN;
+        var tween = this.tweens.add({
+            targets: targets,
+            alpha: alpha,
+            ease: 'Power1',
+            duration: 350,
+            repeat: 0,
+        });
+        tween.setCallback("onComplete", function (scene) { scene.state = state }, [this,]);
     }
 }
