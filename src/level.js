@@ -79,16 +79,16 @@ class Level extends Phaser.Scene {
 
                 // Moving the player
                 if (this.cursors.left.isDown) {
-                    this.player.move(this.map, dir.LEFT);
+                    this.player.move(this, this.map, dir.LEFT);
                 }
                 else if (this.cursors.right.isDown) {
-                    this.player.move(this.map, dir.RIGHT);
+                    this.player.move(this, this.map, dir.RIGHT);
                 }
                 else if (this.cursors.up.isDown) {
-                    this.player.move(this.map, dir.UP);
+                    this.player.move(this, this.map, dir.UP);
                 }
                 else if (this.cursors.down.isDown) {
-                    this.player.move(this.map, dir.DOWN);
+                    this.player.move(this, this.map, dir.DOWN);
                 }
 
                 // Edit stats

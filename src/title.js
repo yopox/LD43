@@ -61,7 +61,7 @@ class Title extends Phaser.Scene {
     move(){
         let direction = this.getRandomDirection();
         let count = 0;
-        while(!this.player.move(this.map, direction) && count < 100) {
+        while(!this.player.move(this, this.map, direction) && count < 100) {
             count++;
             direction = this.getRandomDirection();
         }

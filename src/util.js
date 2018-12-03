@@ -1,5 +1,6 @@
 const groundCOLL = [5, 0];
 const PENALTY = 2;
+const CUT_COST = 2;
 const LEVEL_NUMBER = 10;
 
 const GAME_WIDTH = 896;
@@ -18,9 +19,7 @@ function oob(pos, map) {
 
 // True if there is a collision
 function checkCollision(pos, map) {
-    var collGround = groundCOLL.includes(map.layers[0].data[pos[1] * map.width + pos[0]]);
-
-    return collGround;
+    return groundCOLL.includes(map.layers[0].data[pos[1] * map.width + pos[0]])
 }
 
 // How much moving there will cost
