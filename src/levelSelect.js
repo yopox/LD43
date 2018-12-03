@@ -1,5 +1,3 @@
-const DEFAULT_LEVEL = 0;
-
 class LevelSelect extends Phaser.Scene {
     constructor() {
         super({key: 'levelSelect'});
@@ -54,6 +52,7 @@ class LevelSelect extends Phaser.Scene {
                 color: '#000000'
             })
         }
+        this.select(0);
 
     }
 
@@ -74,9 +73,7 @@ class LevelSelect extends Phaser.Scene {
         let right = Phaser.Input.Keyboard.JustDown(this.cursors.right);
         let left = Phaser.Input.Keyboard.JustDown(this.cursors.left);
         if (this.cursors.space.isDown) {
-            this.scene.start("level", {lvlNumber: this.selected !== -1 ? this.selected: DEFAULT_LEVEL});
-        } else if ((up || down || right || left) && this.selected === -1) {
-            this.select(DEFAULT_LEVEL);
+            this.scene.start("level", {lvlNumber: this.selected});
         } else if (up && this.selected > 0) {
             this.select(this.selected -1);
         } else if (down && this.selected < LEVEL_NUMBER - 1) {
