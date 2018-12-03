@@ -24,6 +24,8 @@ class Tilemap {
         this.treesSpr = [];
         this.rocks = [];
         this.rocksSpr = [];
+        this.gem = [];
+        this.gemSpr = [];
 
         this.frame = 0;
 
@@ -49,6 +51,9 @@ class Tilemap {
                 case 13:
                     this.rocks.push([i % this.width, j]);
                     break;
+                case 14:
+                    this.gem.push([i % this.width, j, true]);
+                    break;
                 default:
                     break;
             }
@@ -70,6 +75,12 @@ class Tilemap {
             var x = this.rocks[i][0];
             var y = this.rocks[i][1];
             this.rocksSpr.push(scene.add.sprite((x - y) * 47, (x + y) * 27, 'rock').setDepth(500 + x + y));
+        }
+
+        for (let i = 0; i < this.gem.length; i++) {
+            var x = this.gem[i][0];
+            var y = this.gem[i][1];
+            this.gemSpr.push(scene.add.sprite((x - y) * 47, (x + y) * 27 - 8, 'gem').setDepth(500 + x + y));
         }
 
     }
@@ -97,14 +108,22 @@ class Tilemap {
     }
 
     update() {
-        this.frame = (this.frame + 1) % 32;
+        this.frame = (this.frame + 1) % 64;
 
-        if (!(this.frame % 4)) {
+        if (!(this.frame % 8)) {
             for (let i = 0; i < this.axesSpr.length; i++) {
-                if (this.frame / 4 < 4) {
+                if (this.frame / 8 < 4) {
                     this.axesSpr[i].y += 1;
                 } else {
                     this.axesSpr[i].y -= 1;
+                }
+            }
+                
+            if (this.gem[0][2]) {
+                if (this.frame / 8 < 4) {
+                    this.gemSpr[0].y += 1;
+                } else {
+                    this.gemSpr[0].y -= 1;
                 }
             }
         }
@@ -169,6 +188,23 @@ class Tilemap {
         return false;
     }
 
+    getGem(scene, pos) {
+        if (this.gem[0][2] && this.gem[0][0] == pos[0] && this.gem[0][1] == pos[1]) {
+            this.gem[0][2] = false;
+            scene.tweens.add({
+                targets: this.gemSpr[0],
+                alpha: 0,
+                ease: 'Power1',
+                duration: 250,
+                delay: 50,
+                repeat: 0
+            });
+            return true;
+        }
+
+        return false;
+    }
+
     checkCollision(pos) {
 
         var coll = false;
@@ -210,6 +246,8 @@ class Tilemap {
 
                 var vx = (direction[0] - direction[1]) * this.tileWidthHalf;
                 var vy = (direction[0] + direction[1]) * this.tileHeightHalf;
+
+                this.rocksSpr[i].setDepth(500 + this.rocks[i][0] + this.rocks[i][1]);
 
                 scene.tweens.add({
                     targets: this.rocksSpr[i],

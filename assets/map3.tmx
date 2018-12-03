@@ -1,29 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.0" orientation="isometric" renderorder="right-down" width="12" height="12" tilewidth="94" tileheight="54" infinite="0" nextlayerid="9" nextobjectid="1">
+<map version="1.2" tiledversion="1.2.0" orientation="isometric" renderorder="right-down" width="3" height="6" tilewidth="94" tileheight="54" infinite="0" nextlayerid="14" nextobjectid="1">
  <properties>
-  <property name="desc">Use TAB and
-arrows to edit
-your stats.</property>
+  <property name="desc">Cut the tree with
+the axe for 2
+strength.</property>
   <property name="points" type="int" value="30"/>
-  <property name="score" type="int" value="50"/>
+  <property name="score" type="int" value="209"/>
  </properties>
- <tileset firstgid="1" name="tileset" tilewidth="94" tileheight="88" tilecount="10" columns="10">
-  <image source="tileset.png" width="940" height="88"/>
+ <tileset firstgid="1" name="tileset" tilewidth="94" tileheight="88" tilecount="14" columns="14">
+  <image source="tileset.png" width="1316" height="88"/>
  </tileset>
- <layer id="8" name="Tile Layer 1" width="12" height="12">
+ <layer id="12" name="Tile Layer 1" width="3" height="6">
   <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,
-0,5,5,5,5,5,0,0,0,0,0,0,
-0,5,1,1,1,5,5,5,0,0,0,0,
-0,5,1,6,1,1,5,5,5,0,0,0,
-0,5,1,1,1,1,10,5,5,5,0,0,
-0,5,5,1,1,9,3,5,8,5,0,0,
-0,0,5,5,9,3,8,1,1,9,5,0,
-0,0,5,5,5,5,1,7,1,5,0,0,
-0,0,0,5,5,8,1,1,1,10,5,0,
-0,0,0,0,5,5,9,5,2,9,5,0,
-0,0,0,0,0,0,5,0,5,5,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0
+8,1,1,
+6,1,1,
+2,1,1,
+5,1,5,
+5,1,5,
+8,1,7
+</data>
+ </layer>
+ <layer id="13" name="Tile Layer 2" width="3" height="6">
+  <data encoding="csv">
+0,0,11,
+0,0,0,
+0,0,0,
+0,0,0,
+0,12,0,
+14,0,0
 </data>
  </layer>
 </map>

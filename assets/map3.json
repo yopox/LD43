@@ -1,27 +1,27 @@
-{ "height":8,
+{ "height":6,
  "infinite":false,
  "layers":[
         {
-         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8, 1, 10, 0, 0, 0, 0, 6, 9, 3, 2, 1, 0, 0, 0, 0, 0, 3, 5, 1, 0, 0, 0, 0, 0, 4, 5, 1, 0, 0, 0, 0, 0, 3, 5, 1, 0, 0, 0, 0, 0, 3, 7, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-         "height":8,
+         "data":[8, 1, 1, 6, 1, 1, 2, 1, 1, 5, 1, 5, 5, 1, 5, 8, 1, 7],
+         "height":6,
          "id":12,
          "name":"Tile Layer 1",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
-         "width":8,
+         "width":3,
          "x":0,
          "y":0
         }, 
         {
-         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-         "height":8,
+         "data":[0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0, 14, 0, 0],
+         "height":6,
          "id":13,
          "name":"Tile Layer 2",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
-         "width":8,
+         "width":3,
          "x":0,
          "y":0
         }],
@@ -37,32 +37,32 @@
         {
          "name":"points",
          "type":"int",
-         "value":20
+         "value":30
         }, 
         {
          "name":"score",
          "type":"int",
-         "value":111
+         "value":209
         }],
  "renderorder":"right-down",
  "tiledversion":"1.2.0",
  "tileheight":54,
  "tilesets":[
         {
-         "columns":12,
+         "columns":14,
          "firstgid":1,
          "image":"tileset.png",
          "imageheight":88,
-         "imagewidth":1128,
+         "imagewidth":1316,
          "margin":0,
          "name":"tileset",
          "spacing":0,
-         "tilecount":12,
+         "tilecount":14,
          "tileheight":88,
          "tilewidth":94
         }],
  "tilewidth":94,
  "type":"map",
  "version":1.2,
- "width":8
+ "width":3
 }

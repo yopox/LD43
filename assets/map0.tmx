@@ -5,10 +5,10 @@
 arrows to edit
 your stats.</property>
   <property name="points" type="int" value="10"/>
-  <property name="score" type="int" value="27"/>
+  <property name="score" type="int" value="28"/>
  </properties>
- <tileset firstgid="1" name="tileset" tilewidth="94" tileheight="88" tilecount="12" columns="12">
-  <image source="tileset.png" width="1128" height="88"/>
+ <tileset firstgid="1" name="tileset" tilewidth="94" tileheight="88" tilecount="14" columns="14">
+  <image source="tileset.png" width="1316" height="88"/>
  </tileset>
  <layer id="12" name="Tile Layer 1" width="3" height="3">
   <data encoding="csv">
@@ -20,7 +20,7 @@ your stats.</property>
  <layer id="13" name="Tile Layer 2" width="3" height="3">
   <data encoding="csv">
 0,0,0,
-0,0,0,
+0,0,14,
 0,0,0
 </data>
  </layer>

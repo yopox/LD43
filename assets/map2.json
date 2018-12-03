@@ -1,27 +1,27 @@
-{ "height":8,
+{ "height":6,
  "infinite":false,
  "layers":[
         {
-         "data":[0, 0, 0, 0, 0, 0, 8, 1, 1, 0, 0, 6, 1, 1, 0, 0, 2, 1, 1, 0, 0, 5, 1, 5, 0, 0, 5, 1, 5, 0, 0, 8, 1, 7, 0, 0, 0, 0, 0, 0],
-         "height":8,
+         "data":[0, 0, 8, 0, 0, 0, 0, 0, 0, 1, 9, 2, 1, 0, 6, 1, 1, 10, 5, 1, 7, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0],
+         "height":6,
          "id":10,
          "name":"Tile Layer 1",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
-         "width":5,
+         "width":7,
          "x":0,
          "y":0
         }, 
         {
-         "data":[0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-         "height":8,
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 14, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "height":6,
          "id":11,
          "name":"Tile Layer 2",
          "opacity":1,
          "type":"tilelayer",
          "visible":true,
-         "width":5,
+         "width":7,
          "x":0,
          "y":0
         }],
@@ -32,37 +32,37 @@
         {
          "name":"desc",
          "type":"string",
-         "value":"Cut the tree with\nthe axe for 2\nstrength."
+         "value":"You can move\nrocks for 1\nstrength point."
         }, 
         {
          "name":"points",
          "type":"int",
-         "value":30
+         "value":20
         }, 
         {
          "name":"score",
          "type":"int",
-         "value":209
+         "value":50
         }],
  "renderorder":"right-down",
  "tiledversion":"1.2.0",
  "tileheight":54,
  "tilesets":[
         {
-         "columns":12,
+         "columns":14,
          "firstgid":1,
          "image":"tileset.png",
          "imageheight":88,
-         "imagewidth":1128,
+         "imagewidth":1316,
          "margin":0,
          "name":"tileset",
          "spacing":0,
-         "tilecount":12,
+         "tilecount":14,
          "tileheight":88,
          "tilewidth":94
         }],
  "tilewidth":94,
  "type":"map",
  "version":1.2,
- "width":5
+ "width":7
 }

@@ -7,6 +7,7 @@ class Player {
         this.sacrifices = 0;
         this.sprite = null;
         this.axes = 0;
+        this.gem = false;
         this.block = 0;
         this.pos = [0, 0];
         this.nextPos = [];
@@ -108,6 +109,11 @@ class Player {
                 // Found axe ?
                 if (map.getAxe(scene, this.pos)) {
                     this.axes += 1;
+                }
+
+                // Found gem ?
+                if (map.getGem(scene, this.pos)) {
+                    this.gem = true;
                 }
 
                 // Update stats
