@@ -57,28 +57,30 @@ class LevelSelect extends Phaser.Scene {
     }
 
     select(rect) {
+        if (this.selected !== -1)
+            this.rectangles[this.selected].setAlpha(0);
         this.rectangles[rect].setAlpha(1);
         this.selected = rect;
         console.log("Select " + rect);
     }
 
-    unselect(rect) {
-        this.rectangles[rect].setAlpha(0);
-    }
-
     update() {
         let up = Phaser.Input.Keyboard.JustDown(this.cursors.up);
         let down = Phaser.Input.Keyboard.JustDown(this.cursors.down);
+        let right = Phaser.Input.Keyboard.JustDown(this.cursors.right);
+        let left = Phaser.Input.Keyboard.JustDown(this.cursors.left);
         if (this.cursors.space.isDown) {
             this.scene.start("level", {lvlNumber: this.selected !== -1 ? this.selected: DEFAULT_LEVEL});
-        } else if ((up || down) && this.selected === -1) {
+        } else if ((up || down || right || left) && this.selected === -1) {
             this.select(DEFAULT_LEVEL);
         } else if (up && this.selected > 0) {
-            this.unselect(this.selected);
             this.select(this.selected -1);
         } else if (down && this.selected < LEVEL_NUMBER - 1) {
-            this.unselect(this.selected);
             this.select(this.selected + 1);
+        } else if (right && this.selected < LEVEL_NUMBER / 2){
+            this.select(this.selected + LEVEL_NUMBER / 2)
+        }  else if (left && this.selected >= LEVEL_NUMBER / 2){
+            this.select(this.selected - LEVEL_NUMBER / 2)
         }
     }
 }
