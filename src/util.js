@@ -35,3 +35,94 @@ function moveCost(pos, map) {
     }
 
 }
+
+
+
+// STORAGE
+// FROM Mozzilla : https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
+function storageAvailable(type) {
+    try {
+        var storage = window[type],
+            x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+    }
+    catch(e) {
+        return e instanceof DOMException && (
+                // everything except Firefox
+            e.code === 22 ||
+            // Firefox
+            e.code === 1014 ||
+            // test name field too, because code might not be present
+            // everything except Firefox
+            e.name === 'QuotaExceededError' ||
+            // Firefox
+            e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+            // acknowledge QuotaExceededError only if there's something already stored
+            storage.length !== 0;
+    }
+}
+
+if (!storageAvailable('localStorage') && !storageAvailable('sessionStorage'))
+    var globalVarStorage = {};
+
+function getStorage() {
+    let storage = null;
+    if (storageAvailable('localStorage')) {
+        storage = window['localStorage'];
+    } else if (storageAvailable("sessionStorage")) {
+        storage = window['sessionStorage'];
+    } else {
+        storage = globalVarStorage;
+    }
+    return storage;
+}
+
+function save(name, obj) {
+    getStorage()[name] = JSON.stringify(obj);
+}
+function load(name) {
+    let storage = getStorage();
+    if (!storage.getItem(name))
+        return null;
+    return JSON.parse(storage.getItem(name));
+}
+
+const NAME_BEST_SCORES_STORAGE = "SacriflagBestScores";
+
+class BestScores {
+    constructor () {
+        this.scores = load(NAME_BEST_SCORES_STORAGE);
+        if (!this.scores) {
+            this.scores = [];
+            for (let i = 0; i < LEVEL_NUMBER; i++)
+                this.scores.push(0);
+            save(NAME_BEST_SCORES_STORAGE, this.scores);
+        }
+        console.log(this.scores)
+    }
+
+    getScore(lvl) {
+        return this.scores[lvl];
+    }
+
+    setBestScore(lvl, score) {
+        this.scores[lvl] = score;
+        save(NAME_BEST_SCORES_STORAGE, this.scores);
+        console.log(this.scores);
+    }
+
+    setScore(lvl, score) {
+        console.log(`set score for level ${lvl} to ${score}`);
+        if (score > this.getScore(lvl))
+            this.setBestScore(lvl, score);
+    }
+
+    update() {
+        let scores = load(NAME_BEST_SCORES_STORAGE);
+        if (!scores) {
+            this.scores = scores;
+        }
+    }
+}
