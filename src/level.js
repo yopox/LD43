@@ -46,7 +46,7 @@ class Level extends Phaser.Scene {
         this.map.buildMap(this);
 
         // Create player
-        this.player = new Player();
+        this.player = new Player(this.map.points);
         this.player.init(this.map.startingPos[0], this.map.startingPos[1], this);
         this.cameras.main.startFollow(this.player.sprite, false, 1, 1, -32 + 157, -32);
         this.cameras.main.setZoom(1);

@@ -4,9 +4,8 @@ class Tilemap {
         var data = scene.cache.json.get(map);
 
         this.desc = data.properties[0].value;
-        this.score = data.properties[1].value;
-
-        console.log(data.properties);
+        this.points = data.properties[1].value;
+        this.score = data.properties[2].value;
 
         this.tileWidthHalf = 47;
         this.tileHeightHalf = 27;

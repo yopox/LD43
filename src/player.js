@@ -1,8 +1,8 @@
 class Player {
 
-    constructor() {
+    constructor(nPoints) {
         this.stats = [0, 0, 0];
-        this.points = 20;
+        this.points = nPoints;
         this.score = 0;
         this.sacrifices = 0;
         this.sprite = null;

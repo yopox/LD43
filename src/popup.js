@@ -7,7 +7,7 @@ class Popup {
     constructor(scene) {
         // POPUP
         this.bg = scene.add.rectangle(POPUP_OFFSET, 64, 320, 208, 0xffffff).setOrigin(0).setDepth(2500).setAlpha(0);
-        this.title = this.addText(scene, 160, 32 + 64, '64px', '').setAlpha(0);
+        this.title = this.addText(scene, 160, 32 + 56, '64px', '').setAlpha(0);
         this.Wline1 = this.addText(scene, 160, 64 + 64, '32px', '').setAlpha(0);
         this.Wline2 = this.addText(scene, 160, 96 + 64, '128px', '84%').setAlpha(0);
         this.Wline3 = this.addText(scene, 160, 168 + 64, '48px', 'Press SPACE to continue').setAlpha(0);
