@@ -8,7 +8,7 @@ const STATES = {
 
 class Level extends Phaser.Scene {
 
-    constructor(data) {
+    constructor() {
         super({ key: 'level' });
 
         this.state = STATES.MOVE;
@@ -32,7 +32,6 @@ class Level extends Phaser.Scene {
     }
 
     init(data) {
-        this.data = data;
         this.lvlNumber = data["lvlNumber"];
     }
 
