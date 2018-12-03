@@ -95,4 +95,53 @@ class Tilemap {
 
     }
 
+    isTree(pos) {
+        for (let i = 0; i < this.trees.length; i++) {
+            if (this.trees[i][2] && this.trees[i][0] == pos[0] && this.trees[i][1] == pos[1]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    cut(scene, pos) {
+        for (let i = 0; i < this.trees.length; i++) {
+            if (this.trees[i][2] && this.trees[i][0] == pos[0] && this.trees[i][1] == pos[1]) {
+                this.trees[i][2] = false;
+                var x = pos[0];
+                var y = pos[1];
+                scene.tweens.add({
+                    targets: this.treesSpr[i],
+                    alpha: 0,
+                    ease: 'Power1',
+                    duration: 250,
+                    delay: 50,
+                    repeat: 0
+                });
+                this.treesSpr.push(scene.add.sprite((x - y) * 47 - 2, (x + y) * 27 - 68, 'tree', 1).setDepth(499));
+
+                return true;
+            }
+        }
+    }
+
+    getAxe(scene, pos) {
+        for (let i = 0; i < this.axes.length; i++) {
+            if (this.axes[i][2] && this.axes[i][0] == pos[0] && this.axes[i][1] == pos[1]) {
+                this.axes[i][2] = false;
+                scene.tweens.add({
+                    targets: this.axesSpr[i],
+                    alpha: 0,
+                    ease: 'Power1',
+                    duration: 250,
+                    delay: 50,
+                    repeat: 0
+                });
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
