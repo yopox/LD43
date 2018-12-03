@@ -45,6 +45,8 @@ class Player {
         // Tree ?
         if (!this.block && map.isTree(nPos)) {
 
+            this.updateFacing(direction);
+
             // Can we cut ?
             if (this.stats[1] >= CUT_COST && this.axes > 0) {
                 map.cut(scene, nPos);

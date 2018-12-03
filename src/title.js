@@ -13,8 +13,8 @@ class Title extends Phaser.Scene {
     create() {
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        this.add.text(GAME_WIDTH,  64, 'Scariflag',
-            { fontFamily: 'm3x6', fontSize: '284px', color: '#000000', width: 300, align: 'center' } )
+        this.add.text(GAME_WIDTH,  64, 'Sacriflag',
+            { fontFamily: 'm3x6', fontSize: '320px', color: '#000000', width: 300, align: 'center' } )
             .setOrigin(0.5);
 
         this.add.text(GAME_WIDTH, 256, '[Press SPACE]',
@@ -33,7 +33,7 @@ class Title extends Phaser.Scene {
         this.player = new Player(this.map.points);
         this.player.init(this.map.startingPos[0], this.map.startingPos[1], this);
         this.player.stats = [10000, 10000, 10000];
-        this.cameras.main.setZoom(.5);
+        this.cameras.main.setZoom(0.5);
 
         this.time.addEvent({
             delay: 1000,
