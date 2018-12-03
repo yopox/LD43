@@ -20,7 +20,7 @@ class Title extends Phaser.Scene {
         this.player.init(8, 8, this);
         this.player.stats = [10000, 10000, 10000];
         this.cameras.main.setZoom(1);
-        this.cameras.main.centerOn(0, GAME_HEIGHT * 0.65);
+        this.cameras.main.centerOn(0, GAME_HEIGHT * 0.72);
 
         this.time.addEvent({
             delay: 1000,
@@ -34,12 +34,11 @@ class Title extends Phaser.Scene {
             { fontFamily: 'm3x6', fontSize: '128px', color: '#000000', width: 300, align: 'center' } )
             .setOrigin(0.5).setDepth(100);
 
-        this.add.text(- .35 * GAME_WIDTH, GAME_HEIGHT, '[Press SPACE]',
+        this.add.text(0, GAME_HEIGHT + 40, '[Press SPACE]',
             { fontFamily: 'm3x6', fontSize: '48px', color: '#000000', width: 300, align: 'center' })
             .setOrigin(0.5).setDepth(100);
 
-
-        this.add.text(0, GAME_HEIGHT + 32, "Art: A_Do - Music: Le Art - Code: Hadri, yopox",
+        this.add.text(0, GAME_HEIGHT + 64, "Art: A_Do - Music: Le Art - Code: Hadri, yopox",
             { fontFamily: 'm3x6', fontSize: '32px', color: '#000000', width: 300, align: 'center' })
             .setOrigin(0.5, 0).setDepth(100);
 
@@ -47,6 +46,7 @@ class Title extends Phaser.Scene {
 
     update() {
         this.player.update();
+        this.map.update();
         if (this.cursors.space.isDown) {
             this.scene.start("levelSelect");
         }

@@ -15,7 +15,7 @@ class LevelSelect extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
         this.bestScores.update();
 
-        this.add.text(320, 0, '--- Level Selection ---',
+        this.add.text(320, -4, '--- Level Selection ---',
             {fontFamily: 'm3x6', fontSize: '48px', color: '#000000'});
 
         this.selected = -1;
@@ -68,8 +68,8 @@ class LevelSelect extends Phaser.Scene {
                 }, this));
         this.add.image(200 + x, y, "lvl" + i).setDisplaySize(this.imageSize, this.imageSize);
         this.drawText(300 + x, y - 32, "Level " + i, 48);
-        this.drawText(50 + x, y + 20, "Best:", 32).setOrigin(0, 1);
-        this.scores.push(this.drawText(100 + x, y + 20, this.bestScores.getScore(i) + "%", 48).setOrigin(0, 1));
+        this.drawText(114 + x, y - 4, "BEST", 32).setOrigin(0.5, 1);
+        this.scores.push(this.drawText(116 + x, y + 28, this.bestScores.getScore(i) + "%", 48).setOrigin(0.5, 1));
     }
 
     select(rect) {

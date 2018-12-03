@@ -27,7 +27,7 @@ class Load extends Phaser.Scene {
         this.load.json("title-map", 'assets/title-map.json');
         for (let i = 0; i < LEVEL_NUMBER; i++) {
             this.load.json(`map${i}`, `assets/map${i}.json`);
-            this.load.image(`lvl${i}`, `assets/lvl${i}.png`);
+            this.load.image(`lvl${i}`, `assets/map${i}.png`);
         }
     }
 
