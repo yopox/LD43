@@ -70,6 +70,8 @@ class Level extends Phaser.Scene {
 
     update() {
 
+        this.map.update();
+
         switch (this.state) {
             case STATES.MOVE:
                 this.player.update();

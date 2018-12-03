@@ -23,6 +23,8 @@ class Tilemap {
         this.trees = [];
         this.treesSpr = [];
 
+        this.frame = 0;
+
         // Get starting, ending, axe, tree positions
         for (let i = 0; i < this.layers[0].data.length; i++) {
             var j = Math.floor(i / this.width);
@@ -41,9 +43,6 @@ class Tilemap {
                 this.trees.push([i % this.width, j, true]);
             }
         }
-
-        console.log(this.axes);
-        console.log(this.trees);
 
         for (let i = 0; i < this.axes.length; i++) {
             var x = this.axes[i][0];
@@ -79,6 +78,21 @@ class Tilemap {
                 i++;
             }
         }
+    }
+
+    update() {
+        this.frame = (this.frame + 1) % 32;
+
+        if (!(this.frame % 4)) {
+            for (let i = 0; i < this.axesSpr.length; i++) {
+                if (this.frame / 4 < 4) {
+                    this.axesSpr[i].y += 1;
+                } else {
+                    this.axesSpr[i].y -= 1;
+                }
+            }
+        }
+
     }
 
 }
