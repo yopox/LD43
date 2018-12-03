@@ -79,6 +79,7 @@ class Player {
             this.gameOver = true;
         }
 
+        return true;
     }
 
     canSacrifice() {
