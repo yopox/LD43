@@ -199,7 +199,7 @@ class Level extends Phaser.Scene {
             default:
                 this.score = Math.round(this.player.score / this.map.score * 100);
                 this.bestScore.setScore(this.lvlNumber, this.score);
-                this.popup.title.text = WIN_TEXT;
+                this.popup.title.text = "Level " + this.lvlNumber + " Complete!";
                 this.popup.Wline1.text = this.player.sacrifices + ' sacrifices - ' + this.player.score + ' points';
                 this.popup.Wline2.text = this.score + "%";
                 targets = [this.popup.bg, this.popup.title, this.popup.Wline1, this.popup.Wline2, this.popup.Wline3];

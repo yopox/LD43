@@ -7,7 +7,6 @@ class Title extends Phaser.Scene {
     }
 
     preload() {
-        console.log("Title");
     }
 
     create() {

@@ -9,7 +9,6 @@ class LevelSelect extends Phaser.Scene {
     }
 
     preload() {
-        console.log("LevelSelect");
     }
 
     create() {
@@ -24,6 +23,11 @@ class LevelSelect extends Phaser.Scene {
         this.imageSize = 80;
         this.halfSeparator = 4;
         this.step = this.imageSize + 2 * this.halfSeparator;
+
+        for (let i = 0; i < this.scores.length; i++) {
+            this.scores[i].destroy();
+        }
+        this.scores = [];
 
         this.drawMenu();
 
@@ -64,12 +68,11 @@ class LevelSelect extends Phaser.Scene {
                 }, this));
         this.add.image(200 + x, y, "lvl" + i).setDisplaySize(this.imageSize, this.imageSize);
         this.drawText(300 + x, y - 32, "Level " + i, 48);
-        this.drawText(50 + x, y + 20, "Best:", 36).setOrigin(0, 1);
-        this.scores.push(this.drawText(100 + x, y + 20, this.bestScores.getScore(i), 48).setOrigin(0, 1));
+        this.drawText(50 + x, y + 20, "Best:", 32).setOrigin(0, 1);
+        this.scores.push(this.drawText(100 + x, y + 20, this.bestScores.getScore(i) + "%", 48).setOrigin(0, 1));
     }
 
     select(rect) {
-        console.log("Select " + rect);
         // First : unselect
         if (this.selected !== -1)
             this.rectangles[this.selected].setAlpha(0);

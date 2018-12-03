@@ -36,8 +36,6 @@ function moveCost(pos, map) {
 
 }
 
-
-
 // STORAGE
 // FROM Mozzilla : https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API
 function storageAvailable(type) {
@@ -48,9 +46,9 @@ function storageAvailable(type) {
         storage.removeItem(x);
         return true;
     }
-    catch(e) {
+    catch (e) {
         return e instanceof DOMException && (
-                // everything except Firefox
+            // everything except Firefox
             e.code === 22 ||
             // Firefox
             e.code === 1014 ||
@@ -92,7 +90,7 @@ function load(name) {
 const NAME_BEST_SCORES_STORAGE = "SacriflagBestScores";
 
 class BestScores {
-    constructor () {
+    constructor() {
         this.scores = load(NAME_BEST_SCORES_STORAGE);
         if (!this.scores) {
             this.scores = [];
@@ -100,7 +98,6 @@ class BestScores {
                 this.scores.push(0);
             save(NAME_BEST_SCORES_STORAGE, this.scores);
         }
-        console.log(this.scores)
     }
 
     getScore(lvl) {
@@ -110,19 +107,14 @@ class BestScores {
     setBestScore(lvl, score) {
         this.scores[lvl] = score;
         save(NAME_BEST_SCORES_STORAGE, this.scores);
-        console.log(this.scores);
     }
 
     setScore(lvl, score) {
-        console.log(`set score for level ${lvl} to ${score}`);
         if (score > this.getScore(lvl))
             this.setBestScore(lvl, score);
     }
 
     update() {
-        let scores = load(NAME_BEST_SCORES_STORAGE);
-        if (!scores) {
-            this.scores = scores;
-        }
+        this.scores = load(NAME_BEST_SCORES_STORAGE);
     }
 }
