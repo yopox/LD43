@@ -13,8 +13,17 @@ class Title extends Phaser.Scene {
     create() {
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        this.add.text(GAME_WIDTH,  128, 'LD43',
+        this.add.text(GAME_WIDTH,  64, 'Scariflag',
             { fontFamily: 'm3x6', fontSize: '284px', color: '#000000', width: 300, align: 'center' } )
+            .setOrigin(0.5);
+
+        this.add.text(GAME_WIDTH, 256, '[Press SPACE]',
+            { fontFamily: 'm3x6', fontSize: '96px', color: '#000000', width: 300, align: 'center' })
+            .setOrigin(0.5);
+
+
+        this.add.text(GAME_WIDTH, 1.20 * GAME_HEIGHT, "Art: A_Do\n Music: Le Art\nCode: Hadri, yopox",
+            { fontFamily: 'm3x6', fontSize: '64px', color: '#000000', width: 300, align: 'center' })
             .setOrigin(0.5);
 
         this.map = new Tilemap(`title-map`, this);
@@ -24,8 +33,6 @@ class Title extends Phaser.Scene {
         this.player = new Player(this.map.points);
         this.player.init(this.map.startingPos[0], this.map.startingPos[1], this);
         this.player.stats = [10000, 10000, 10000];
-        // this.cameras.main.startFollow(this.player.sprite, false, 1, 1, , 0);
-        // this.cameras.main.setPosition(GAME_HEIGHT / 2, GAME_WIDTH / 2);
         this.cameras.main.setZoom(.5);
 
         this.time.addEvent({
