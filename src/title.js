@@ -13,27 +13,16 @@ class Title extends Phaser.Scene {
     create() {
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        this.add.text(GAME_WIDTH,  64, 'Sacriflag',
-            { fontFamily: 'm3x6', fontSize: '320px', color: '#000000', width: 300, align: 'center' } )
-            .setOrigin(0.5);
-
-        this.add.text(GAME_WIDTH, 256, '[Press SPACE]',
-            { fontFamily: 'm3x6', fontSize: '96px', color: '#000000', width: 300, align: 'center' })
-            .setOrigin(0.5);
-
-
-        this.add.text(GAME_WIDTH, 1.20 * GAME_HEIGHT, "Art: A_Do\n Music: Le Art\nCode: Hadri, yopox",
-            { fontFamily: 'm3x6', fontSize: '64px', color: '#000000', width: 300, align: 'center' })
-            .setOrigin(0.5);
-
         this.map = new Tilemap(`title-map`, this);
         this.map.buildMap(this);
 
         // Create player
         this.player = new Player(this.map.points);
-        this.player.init(this.map.startingPos[0], this.map.startingPos[1], this);
+        this.player.init(8, 8, this);
         this.player.stats = [10000, 10000, 10000];
-        this.cameras.main.setZoom(0.5);
+        this.cameras.main.setZoom(1);
+        this.cameras.main.centerOn(0, GAME_HEIGHT * 0.65);
+        console.log(this);
 
         this.time.addEvent({
             delay: 1000,
@@ -42,6 +31,20 @@ class Title extends Phaser.Scene {
             loop: true,
         });
         this.lastDir = dir.DOWN;
+
+        this.add.text(0,  GAME_HEIGHT * 0.55, 'Scariflag',
+            { fontFamily: 'm3x6', fontSize: '192px', color: '#000000', width: 300, align: 'center' } )
+            .setOrigin(0.5).setDepth(100);
+
+        this.add.text(- .35 * GAME_WIDTH, GAME_HEIGHT, '[Press SPACE]',
+            { fontFamily: 'm3x6', fontSize: '48px', color: '#000000', width: 300, align: 'center' })
+            .setOrigin(0.5).setDepth(100);
+
+
+        this.add.text(0, GAME_HEIGHT + 32, "Art: A_Do - Music: Le Art - Code: Hadri, yopox",
+            { fontFamily: 'm3x6', fontSize: '32px', color: '#000000', width: 300, align: 'center' })
+            .setOrigin(0.5, 0).setDepth(100);
+
     }
 
     update() {
