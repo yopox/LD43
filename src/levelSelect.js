@@ -1,3 +1,5 @@
+const DEFAULT_LEVEL = 0;
+
 class LevelSelect extends Phaser.Scene {
     constructor() {
         super({key: 'levelSelect'});
@@ -12,7 +14,7 @@ class LevelSelect extends Phaser.Scene {
     create() {
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        this.add.text(320, 8, '--- Level Selection ---',
+        this.add.text(320, 0, '--- Level Selection ---',
             {fontFamily: 'm3x6', fontSize: '48px', color: '#000000'});
 
         let yOffset = 100;
@@ -44,7 +46,8 @@ class LevelSelect extends Phaser.Scene {
                     .on('pointerdown', function () {
                         this.scene.start("level", {lvlNumber: i});
                     }, this));
-            this.add.image(150 + GAME_WIDTH / 2, yOffset + step * i, "lvl" + (i + halfLvlNb)).setDisplaySize(imageSize, imageSize);
+            this.add.image(150 + GAME_WIDTH / 2, yOffset + step * i, "lvl" + (i + halfLvlNb))
+                .setDisplaySize(imageSize, imageSize);
             this.add.text(250 + GAME_WIDTH / 2, yOffset + step * i - 32, "Level " + (i + halfLvlNb), {
                 fontFamily: 'm3x6',
                 fontSize: '48px',
@@ -55,30 +58,33 @@ class LevelSelect extends Phaser.Scene {
     }
 
     select(rect) {
-        this.rectangles[rect].setAlpha(1);
         console.log("Select " + rect);
-    }
-
-    unselect(rect) {
-        this.rectangles[rect].setAlpha(0);
+        // First : unselect
+        if (this.selected !== -1)
+            this.rectangles[this.selected].setAlpha(0);
+        // Then : select
+        this.rectangles[rect].setAlpha(1);
+        // Finaly : set flag
+        this.selected = rect;
     }
 
     update() {
         let up = Phaser.Input.Keyboard.JustDown(this.cursors.up);
         let down = Phaser.Input.Keyboard.JustDown(this.cursors.down);
+        let right = Phaser.Input.Keyboard.JustDown(this.cursors.right);
+        let left = Phaser.Input.Keyboard.JustDown(this.cursors.left);
         if (this.cursors.space.isDown) {
-            this.scene.start("level", {lvlNumber: this.selected !== -1 ? this.selected: 1});
-        } else if ((up || down) && this.selected === -1) {
-            this.select(0);
-            this.selected = 1;
+            this.scene.start("level", {lvlNumber: this.selected !== -1 ? this.selected: DEFAULT_LEVEL});
+        } else if ((up || down || right || left) && this.selected === -1) {
+            this.select(DEFAULT_LEVEL);
         } else if (up && this.selected > 0) {
-            this.unselect(this.selected);
-            this.selected--;
-            this.select(this.selected);
+            this.select(this.selected -1);
         } else if (down && this.selected < LEVEL_NUMBER - 1) {
-            this.unselect(this.selected);
-            this.selected++;
-            this.select(this.selected);
+            this.select(this.selected + 1);
+        } else if (right && this.selected < LEVEL_NUMBER / 2){
+            this.select(this.selected + LEVEL_NUMBER / 2)
+        }  else if (left && this.selected >= LEVEL_NUMBER / 2){
+            this.select(this.selected - LEVEL_NUMBER / 2)
         }
     }
 }
