@@ -1,6 +1,9 @@
 const groundCOLL = [5, 0];
 const PENALTY = 2;
-const LEVEL_NUMBER = 2;
+const LEVEL_NUMBER = 5;
+
+const GAME_WIDTH = 896;
+const GAME_HEIGHT = 504;
 
 const dir = {
     LEFT: [-1, 0],

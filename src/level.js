@@ -21,10 +21,13 @@ class Level extends Phaser.Scene {
         this.gui = null;
         this.popup = null;
 
-        // States
+        // Keys
         this.TABKey = null;
         this.RKey = null;
         this.SPACEKey = null;
+        this.ESCKey = null;
+
+        // States
         this.distribStats = null;
     }
 
@@ -34,7 +37,7 @@ class Level extends Phaser.Scene {
     }
 
     preload() {
-        console.log("Level");
+        console.log("Level " + this.lvlNumber);
     }
 
     create() {
@@ -61,7 +64,7 @@ class Level extends Phaser.Scene {
         this.RKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
         this.TABKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
         this.SPACEKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
-
+        this.ESCKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
     }
 
     update() {
@@ -106,7 +109,7 @@ class Level extends Phaser.Scene {
                 }
                 
                 // The player lost
-                if (this.player.gameOver && this.player.block == 4) {
+                if ((this.player.gameOver && this.player.block == 4) || this.ESCKey.isDown) {
                     this.openPopup();
                     this.cameras.main.fadeOut(350, 100, 100, 100);
                     this.state = STATES.GAME_OVER;
@@ -154,7 +157,7 @@ class Level extends Phaser.Scene {
                     this.scene.start("levelSelect");
                 }
                 else if (Phaser.Input.Keyboard.JustDown(this.RKey)) {
-                    this.scene.start("level", {lvlNumber: 1});
+                    this.scene.start("level", {lvlNumber: this.lvlNumber});
                 }
                 break;
         }
