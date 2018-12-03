@@ -3,6 +3,9 @@ class LevelSelect extends Phaser.Scene {
         super({key: 'levelSelect'});
         this.selected = -1;
         this.rectangles = [];
+        this.scores = [];
+        this.bestScores = new BestScores();
+        this.toUpdateScores = false;
     }
 
     preload() {
@@ -11,49 +14,58 @@ class LevelSelect extends Phaser.Scene {
 
     create() {
         this.cursors = this.input.keyboard.createCursorKeys();
+        this.bestScores.update();
 
         this.add.text(320, 0, '--- Level Selection ---',
             {fontFamily: 'm3x6', fontSize: '48px', color: '#000000'});
 
-        let yOffset = 100;
-        let imageSize = 80;
-        let halfSeparator = 4;
-        let step = imageSize + 2 * halfSeparator;
-
         this.selected = -1;
         this.rectangles = [];
-        let halfLvlNb = Math.floor(LEVEL_NUMBER / 2);
-        for (let i = 0; i < halfLvlNb; i++) {
-            this.rectangles.push(
-                this.add.rectangle(GAME_WIDTH / 4, yOffset + step * i, GAME_WIDTH / 2, step, 0xffffff)
-                    .setAlpha(0).setInteractive()
-                    .on('pointerdown', function () {
-                        this.scene.start("level", {lvlNumber: i});
-                    }, this));
-            this.add.image(150, yOffset + step * i, "lvl" + i).setDisplaySize(imageSize, imageSize);
-            this.add.text(250, yOffset + step * i - 32, "Level " + i, {
-                fontFamily: 'm3x6',
-                fontSize: '48px',
-                color: '#000000'
-            })
-        }
-        for (let i = 0; i < LEVEL_NUMBER / 2; i++) {
-            this.rectangles.push(
-                this.add.rectangle(3 * GAME_WIDTH / 4, yOffset + step * i, GAME_WIDTH / 2, step, 0xffffff)
-                    .setAlpha(0).setInteractive()
-                    .on('pointerdown', function () {
-                        this.scene.start("level", {lvlNumber: i});
-                    }, this));
-            this.add.image(150 + GAME_WIDTH / 2, yOffset + step * i, "lvl" + (i + halfLvlNb))
-                .setDisplaySize(imageSize, imageSize);
-            this.add.text(250 + GAME_WIDTH / 2, yOffset + step * i - 32, "Level " + (i + halfLvlNb), {
-                fontFamily: 'm3x6',
-                fontSize: '48px',
-                color: '#000000'
-            })
-        }
+        this.imageSize = 80;
+        this.halfSeparator = 4;
+        this.step = this.imageSize + 2 * this.halfSeparator;
+
+        this.drawMenu();
+
         this.select(0);
 
+    }
+
+    drawText(x, y, text, size) {
+        return this.add.text(x, y, text, {
+            fontFamily: 'm3x6',
+            fontSize: size + 'px',
+            color: '#000000'
+        })
+    }
+
+    drawMenu() {
+        let halfLvlNb = Math.floor(LEVEL_NUMBER / 2);
+        let yOffset = 100;
+
+        for (let i = 0; i < LEVEL_NUMBER; i++) {
+            if (i < halfLvlNb) {
+                this.drawThing(0, yOffset, i);
+            } else {
+                this.drawThing(GAME_WIDTH / 2, yOffset - this.step * halfLvlNb, i)
+            }
+        }
+
+    }
+
+    drawThing(x, y, i) {
+        y += i * this.step;
+
+        this.rectangles.push(
+            this.add.rectangle(x + GAME_WIDTH / 4, y, GAME_WIDTH / 2, this.step, 0xffffff)
+                .setAlpha(0).setInteractive()
+                .on('pointerdown', function () {
+                    this.scene.start("level", {lvlNumber: i});
+                }, this));
+        this.add.image(200 + x, y, "lvl" + i).setDisplaySize(this.imageSize, this.imageSize);
+        this.drawText(300 + x, y - 32, "Level " + i, 48);
+        this.drawText(50 + x, y + 20, "Best:", 36).setOrigin(0, 1);
+        this.scores.push(this.drawText(100 + x, y + 20, this.bestScores.getScore(i), 48).setOrigin(0, 1));
     }
 
     select(rect) {
@@ -68,19 +80,15 @@ class LevelSelect extends Phaser.Scene {
     }
 
     update() {
-        let up = Phaser.Input.Keyboard.JustDown(this.cursors.up);
-        let down = Phaser.Input.Keyboard.JustDown(this.cursors.down);
-        let right = Phaser.Input.Keyboard.JustDown(this.cursors.right);
-        let left = Phaser.Input.Keyboard.JustDown(this.cursors.left);
         if (this.cursors.space.isDown) {
             this.scene.start("level", {lvlNumber: this.selected});
-        } else if (up && this.selected > 0) {
-            this.select(this.selected -1);
-        } else if (down && this.selected < LEVEL_NUMBER - 1) {
+        } else if (Phaser.Input.Keyboard.JustDown(this.cursors.up) && this.selected > 0) {
+            this.select(this.selected - 1);
+        } else if (Phaser.Input.Keyboard.JustDown(this.cursors.down) && this.selected < LEVEL_NUMBER - 1) {
             this.select(this.selected + 1);
-        } else if (right && this.selected < LEVEL_NUMBER / 2){
+        } else if (Phaser.Input.Keyboard.JustDown(this.cursors.right) && this.selected < LEVEL_NUMBER / 2) {
             this.select(this.selected + LEVEL_NUMBER / 2)
-        }  else if (left && this.selected >= LEVEL_NUMBER / 2){
+        } else if (Phaser.Input.Keyboard.JustDown(this.cursors.left) && this.selected >= LEVEL_NUMBER / 2) {
             this.select(this.selected - LEVEL_NUMBER / 2)
         }
     }

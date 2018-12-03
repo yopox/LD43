@@ -43,6 +43,7 @@ class Level extends Phaser.Scene {
     create() {
         // Init
         this.state = STATES.MOVE;
+        this.bestScore = new BestScores();
 
         // Create tilemap
         this.map = new Tilemap(`map${this.lvlNumber}`, this);
@@ -187,7 +188,7 @@ class Level extends Phaser.Scene {
     }
 
     openPopup() {
-        var targets = [];
+        let targets = [];
 
         switch (this.player.finishedLevel) {
             case false:
@@ -196,9 +197,11 @@ class Level extends Phaser.Scene {
                 break;
 
             default:
+                this.score = Math.round(this.player.score / this.map.score * 100);
+                this.bestScore.setScore(this.lvlNumber, this.score);
                 this.popup.title.text = WIN_TEXT;
                 this.popup.Wline1.text = this.player.sacrifices + ' sacrifices - ' + this.player.score + ' points';
-                this.popup.Wline2.text = Math.round(this.player.score / this.map.score * 100) + "%";
+                this.popup.Wline2.text = this.score + "%";
                 targets = [this.popup.bg, this.popup.title, this.popup.Wline1, this.popup.Wline2, this.popup.Wline3];
                 break;
         }

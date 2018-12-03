@@ -22,7 +22,6 @@ class Title extends Phaser.Scene {
         this.player.stats = [10000, 10000, 10000];
         this.cameras.main.setZoom(1);
         this.cameras.main.centerOn(0, GAME_HEIGHT * 0.65);
-        console.log(this);
 
         this.time.addEvent({
             delay: 1000,
