@@ -32,8 +32,8 @@ class Title extends Phaser.Scene {
         });
         this.lastDir = dir.DOWN;
 
-        this.add.text(0,  GAME_HEIGHT * 0.55, 'Sacriflag',
-            { fontFamily: 'm3x6', fontSize: '192px', color: '#000000', width: 300, align: 'center' } )
+        this.add.text(0,  GAME_HEIGHT * 0.6, 'Sacriflag',
+            { fontFamily: 'm3x6', fontSize: '128px', color: '#000000', width: 300, align: 'center' } )
             .setOrigin(0.5).setDepth(100);
 
         this.add.text(- .35 * GAME_WIDTH, GAME_HEIGHT, '[Press SPACE]',

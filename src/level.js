@@ -189,8 +189,8 @@ class Level extends Phaser.Scene {
     openPopup() {
         var targets = [];
 
-        switch (this.player.gameOver) {
-            case true:
+        switch (this.player.finishedLevel) {
+            case false:
                 this.popup.title.text = GAME_OVER_TEXT;
                 targets = [this.popup.bg, this.popup.title, this.popup.GOline1, this.popup.GOline2];
                 break;

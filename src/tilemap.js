@@ -22,6 +22,8 @@ class Tilemap {
         this.axesSpr = [];
         this.trees = [];
         this.treesSpr = [];
+        this.rocks = [];
+        this.rocksSpr = [];
 
         this.frame = 0;
 
@@ -37,10 +39,18 @@ class Tilemap {
             }
 
             // Axe and tree
-            if (this.layers[1].data[i] == 11) {
-                this.axes.push([i % this.width, j, true]);
-            } else if (this.layers[1].data[i] == 12) {
-                this.trees.push([i % this.width, j, true]);
+            switch (this.layers[1].data[i]) {
+                case 11:
+                    this.axes.push([i % this.width, j, true]);
+                    break;
+                case 12:
+                    this.trees.push([i % this.width, j, true]);
+                    break;
+                case 13:
+                    this.rocks.push([i % this.width, j]);
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -54,6 +64,12 @@ class Tilemap {
             var x = this.trees[i][0];
             var y = this.trees[i][1];
             this.treesSpr.push(scene.add.sprite((x - y) * 47 - 2, (x + y) * 27 - 68, 'tree', 0).setDepth(500 + x + y));
+        }
+
+        for (let i = 0; i < this.rocks.length; i++) {
+            var x = this.rocks[i][0];
+            var y = this.rocks[i][1];
+            this.rocksSpr.push(scene.add.sprite((x - y) * 47, (x + y) * 27, 'rock').setDepth(500 + x + y));
         }
 
     }
@@ -104,6 +120,15 @@ class Tilemap {
         return false;
     }
 
+    isRock(pos) {
+        for (let i = 0; i < this.rocks.length; i++) {
+            if (this.rocks[i][0] == pos[0] && this.rocks[i][1] == pos[1]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     cut(scene, pos) {
         for (let i = 0; i < this.trees.length; i++) {
             if (this.trees[i][2] && this.trees[i][0] == pos[0] && this.trees[i][1] == pos[1]) {
@@ -142,6 +167,62 @@ class Tilemap {
         }
 
         return false;
+    }
+
+    checkCollision(pos) {
+
+        var coll = false;
+
+        for (let i = 0; i < this.axes.length; i++) {
+            if (this.axes[i][2]) {
+                var x = this.axes[i][0];
+                var y = this.axes[i][1];
+                coll = coll || (pos[0] == x && pos[1] == y);
+            }
+        }
+
+        for (let i = 0; i < this.trees.length; i++) {
+            if (this.trees[i][2]) {
+                var x = this.trees[i][0];
+                var y = this.trees[i][1];
+                coll = coll || (pos[0] == x && pos[1] == y);
+            }
+        }
+
+        for (let i = 0; i < this.rocks.length; i++) {
+            var x = this.rocks[i][0];
+            var y = this.rocks[i][1];
+            coll = coll || (pos[0] == x && pos[1] == y);
+        }
+
+        return coll;
+    }
+
+    pushRock(scene, nPos, direction) {
+
+        for (let i = 0; i < this.rocks.length; i++) {
+            var x = this.rocks[i][0];
+            var y = this.rocks[i][1];
+
+            if (x == nPos[0] && y == nPos[1]) {
+                this.rocks[i][0] += direction[0];
+                this.rocks[i][1] += direction[1];
+
+                var vx = (direction[0] - direction[1]) * this.tileWidthHalf;
+                var vy = (direction[0] + direction[1]) * this.tileHeightHalf;
+
+                scene.tweens.add({
+                    targets: this.rocksSpr[i],
+                    props: {
+                        x: { value: '+=' + vx, duration: 350, ease: 'Power1' },
+                        y: { value: '+=' + vy, duration: 350, ease: 'Power1' }
+                    },
+                    repeat: 0
+                });
+            }
+
+        }
+
     }
 
 }

@@ -42,14 +42,17 @@ class Player {
         var nPos = [this.pos[0] + direction[0], this.pos[1] + direction[1]];
         var cost = moveCost(nPos, map);
 
+        if (!this.block) {
+            this.updateFacing(direction);
+        }
+
         // Tree ?
         if (!this.block && map.isTree(nPos)) {
-
-            this.updateFacing(direction);
 
             // Can we cut ?
             if (this.stats[1] >= CUT_COST && this.axes > 0) {
                 map.cut(scene, nPos);
+                this.score += this.stats[2];
                 this.stats[1] -= CUT_COST;
                 this.axes -= 1;
                 this.block = 30;
@@ -59,49 +62,65 @@ class Player {
 
         } else {
 
-            // The player can't move
-            if (this.block || oob(nPos, map) || checkCollision(nPos, map) || this.stats[0] < cost) {
-                if (!this.block)
-                    this.updateFacing(direction);
-                return false;
+            // Rock
+            if (!this.block && map.isRock(nPos)) {
+
+                // Where the rock should go
+                var nRockPos = [nPos[0] + direction[0], nPos[1] + direction[1]];
+
+                // Push the rock
+                if (this.stats[1] >= 1 && !oob(nRockPos, map) && !checkCollision(nRockPos, map) && !map.checkCollision(nRockPos)) {
+                    map.pushRock(scene, nPos, direction);
+                    this.score += this.stats[2];
+                    this.stats[1] -= CUT_PUSH;
+                    this.block = 30;
+                } else {
+                    return false;
+                }
+
+            } else {
+
+                // The player can't move
+                if (this.block || oob(nPos, map) || checkCollision(nPos, map) || this.stats[0] < cost) {
+                    return false;
+                }
+
+                // Let's move
+                this.block = 30;
+                this.pos = nPos;
+                this.sprite.depth = 500 + nPos[0] + nPos[1];
+
+                switch (direction) {
+                    case dir.UP:
+                        this.nextPos = [[1, 0, 0], [1, 0, 0], [1, 0, 0], [2, 12, -7], [2, 12, -7], [3, 6, -4], [3, 6, -3], [4, 6, -3], [4, 5, -3], [0, 0, 0]].reverse();
+                        break;
+                    case dir.DOWN:
+                        this.nextPos = [[2 * 7 + 1, 0, 0], [2 * 7 + 1, 0, 0], [2 * 7 + 1, 0, 0], [2 * 7 + 2, -12, 7], [2 * 7 + 2, -12, 7], [2 * 7 + 3, -6, 4], [2 * 7 + 3, -6, 3], [2 * 7 + 4, -6, 3], [2 * 7 + 4, -5, 3], [2 * 7, 0, 0]].reverse();
+                        break;
+                    case dir.LEFT:
+                        this.nextPos = [[7 + 1, 0, 0], [7 + 1, 0, 0], [7 + 1, 0, 0], [7 + 2, -12, -7], [7 + 2, -12, -7], [7 + 3, -6, -4], [7 + 3, -6, -3], [7 + 4, -6, -3], [7 + 4, -5, -3], [7 + 0, 0, 0]].reverse();
+                        break;
+                    case dir.RIGHT:
+                        this.nextPos = [[3 * 7 + 1, 0, 0], [3 * 7 + 1, 0, 0], [3 * 7 + 1, 0, 0], [3 * 7 + 2, 12, 7], [3 * 7 + 2, 12, 7], [3 * 7 + 3, 6, 4], [3 * 7 + 3, 6, 3], [3 * 7 + 4, 6, 3], [3 * 7 + 4, 5, 3], [3 * 7 + 0, 0, 0]].reverse();
+                        break;
+                }
+
+                // Found axe ?
+                if (map.getAxe(scene, this.pos)) {
+                    this.axes += 1;
+                }
+
+                // Update stats
+                this.stats[0] -= cost;
+                this.score += this.stats[2];
+
+                // The level is over
+                if (this.pos[0] == map.goal[0] && this.pos[1] == map.goal[1]) {
+                    this.finishedLevel = true;
+                } else if (this.points == 0 && this.stats[0] == 0 && (this.stats[1] + this.stats[2]) < PENALTY) {
+                    this.gameOver = true;
+                }
             }
-
-            // Let's move
-            this.block = 30;
-            this.pos = nPos;
-            this.sprite.depth = 500 + nPos[0] + nPos[1];
-
-            switch (direction) {
-                case dir.UP:
-                    this.nextPos = [[1, 0, 0], [1, 0, 0], [1, 0, 0], [2, 12, -7], [2, 12, -7], [3, 6, -4], [3, 6, -3], [4, 6, -3], [4, 5, -3], [0, 0, 0]].reverse();
-                    break;
-                case dir.DOWN:
-                    this.nextPos = [[2 * 7 + 1, 0, 0], [2 * 7 + 1, 0, 0], [2 * 7 + 1, 0, 0], [2 * 7 + 2, -12, 7], [2 * 7 + 2, -12, 7], [2 * 7 + 3, -6, 4], [2 * 7 + 3, -6, 3], [2 * 7 + 4, -6, 3], [2 * 7 + 4, -6, 3], [2 * 7, 0, 0]].reverse();
-                    break;
-                case dir.LEFT:
-                    this.nextPos = [[7 + 1, 0, 0], [7 + 1, 0, 0], [7 + 1, 0, 0], [7 + 2, -12, -7], [7 + 2, -12, -7], [7 + 3, -6, -4], [7 + 3, -6, -3], [7 + 4, -6, -3], [7 + 4, -5, -3], [7 + 0, 0, 0]].reverse();
-                    break;
-                case dir.RIGHT:
-                    this.nextPos = [[3 * 7 + 1, 0, 0], [3 * 7 + 1, 0, 0], [3 * 7 + 1, 0, 0], [3 * 7 + 2, 12, 7], [3 * 7 + 2, 12, 7], [3 * 7 + 3, 6, 4], [3 * 7 + 3, 6, 3], [3 * 7 + 4, 6, 3], [3 * 7 + 4, 5, 3], [3 * 7 + 0, 0, 0]].reverse();
-                    break;
-            }
-
-            // Found axe ?
-            if (map.getAxe(scene, this.pos)) {
-                this.axes += 1;
-            }
-
-            // Update stats
-            this.stats[0] -= cost;
-            this.score += this.stats[2];
-
-            // The level is over
-            if (this.pos[0] == map.goal[0] && this.pos[1] == map.goal[1]) {
-                this.finishedLevel = true;
-            } else if (this.points == 0 && this.stats[0] == 0 && (this.stats[1] + this.stats[2]) < PENALTY) {
-                this.gameOver = true;
-            }
-
         }
 
         return true;
