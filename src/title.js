@@ -12,7 +12,7 @@ class Title extends Phaser.Scene {
         this.cursors = this.input.keyboard.createCursorKeys();
 
         this.add.text(320, 128, 'LD43',
-            { fontFamily: 'm3x6', fontSize: '48px', color: '#000000', width: 300, align: 'center' } )
+            { fontFamily: 'm3x6', fontSize: '128px', color: '#000000', width: 300, align: 'center' } )
     }
 
     update() {

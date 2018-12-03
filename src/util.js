@@ -1,6 +1,6 @@
 const groundCOLL = [5, 0];
 const PENALTY = 2;
-const LEVEL_NUMBER = 5;
+const LEVEL_NUMBER = 10;
 
 const GAME_WIDTH = 896;
 const GAME_HEIGHT = 504;
