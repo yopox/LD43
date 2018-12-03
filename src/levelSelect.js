@@ -22,9 +22,10 @@ class LevelSelect extends Phaser.Scene {
 
         this.selected = -1;
         this.rectangles = [];
-        for (let i = 0; i < LEVEL_NUMBER; i++) {
+        let halfLvlNb = Math.floor(LEVEL_NUMBER / 2);
+        for (let i = 0; i < halfLvlNb; i++) {
             this.rectangles.push(
-                this.add.rectangle(GAME_WIDTH / 2, yOffset + step * i, GAME_WIDTH, step, 0xffffff)
+                this.add.rectangle(GAME_WIDTH / 4, yOffset + step * i, GAME_WIDTH / 2, step, 0xffffff)
                     .setAlpha(0).setInteractive()
                     .on('pointerdown', function () {
                         this.scene.start("level", {lvlNumber: i});
@@ -36,6 +37,21 @@ class LevelSelect extends Phaser.Scene {
                 color: '#000000'
             })
         }
+        for (let i = 0; i < LEVEL_NUMBER / 2; i++) {
+            this.rectangles.push(
+                this.add.rectangle(3 * GAME_WIDTH / 4, yOffset + step * i, GAME_WIDTH / 2, step, 0xffffff)
+                    .setAlpha(0).setInteractive()
+                    .on('pointerdown', function () {
+                        this.scene.start("level", {lvlNumber: i});
+                    }, this));
+            this.add.image(150 + GAME_WIDTH / 2, yOffset + step * i, "lvl" + (i + halfLvlNb)).setDisplaySize(imageSize, imageSize);
+            this.add.text(250 + GAME_WIDTH / 2, yOffset + step * i - 32, "Level " + (i + halfLvlNb), {
+                fontFamily: 'm3x6',
+                fontSize: '48px',
+                color: '#000000'
+            })
+        }
+
     }
 
     select(rect) {
@@ -53,7 +69,7 @@ class LevelSelect extends Phaser.Scene {
         if (this.cursors.space.isDown) {
             this.scene.start("level", {lvlNumber: this.selected !== -1 ? this.selected: 1});
         } else if ((up || down) && this.selected === -1) {
-            this.select(1);
+            this.select(0);
             this.selected = 1;
         } else if (up && this.selected > 0) {
             this.unselect(this.selected);
