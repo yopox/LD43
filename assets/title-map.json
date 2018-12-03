@@ -1,0 +1,68 @@
+{ "height":12,
+ "infinite":false,
+ "layers":[
+        {
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 5, 1, 1, 1, 5, 5, 5, 0, 0, 0, 0, 0, 5, 1, 6, 1, 1, 5, 5, 5, 0, 0, 0, 0, 5, 1, 1, 1, 1, 10, 5, 5, 5, 0, 0, 0, 5, 5, 1, 1, 9, 3, 5, 8, 5, 0, 0, 0, 0, 5, 5, 9, 3, 8, 1, 1, 9, 5, 0, 0, 0, 5, 5, 5, 5, 1, 7, 1, 5, 0, 0, 0, 0, 0, 5, 5, 8, 1, 1, 1, 10, 5, 0, 0, 0, 0, 0, 5, 5, 9, 5, 2, 9, 5, 0, 0, 0, 0, 0, 0, 0, 5, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "height":12,
+         "id":8,
+         "name":"Tile Layer 1",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":12,
+         "x":0,
+         "y":0
+        }, 
+        {
+         "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+         "height":12,
+         "id":9,
+         "name":"Tile Layer 2",
+         "opacity":1,
+         "type":"tilelayer",
+         "visible":true,
+         "width":12,
+         "x":0,
+         "y":0
+        }],
+ "nextlayerid":10,
+ "nextobjectid":1,
+ "orientation":"isometric",
+ "properties":[
+        {
+         "name":"desc",
+         "type":"string",
+         "value":"Use TAB and\narrows to edit\nyour stats."
+        }, 
+        {
+         "name":"points",
+         "type":"int",
+         "value":20
+        }, 
+        {
+         "name":"score",
+         "type":"int",
+         "value":50
+        }],
+ "renderorder":"right-down",
+ "tiledversion":"1.2.0",
+ "tileheight":54,
+ "tilesets":[
+        {
+         "columns":12,
+         "firstgid":1,
+         "image":"tileset.png",
+         "imageheight":88,
+         "imagewidth":1128,
+         "margin":0,
+         "name":"tileset",
+         "spacing":0,
+         "tilecount":12,
+         "tileheight":88,
+         "tilewidth":94
+        }],
+ "tilewidth":94,
+ "type":"map",
+ "version":1.2,
+ "width":12
+}

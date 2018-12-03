@@ -17,7 +17,7 @@ class Title extends Phaser.Scene {
             { fontFamily: 'm3x6', fontSize: '284px', color: '#000000', width: 300, align: 'center' } )
             .setOrigin(0.5);
 
-        this.map = new Tilemap(`map1`, this);
+        this.map = new Tilemap(`title-map`, this);
         this.map.buildMap(this);
 
         // Create player

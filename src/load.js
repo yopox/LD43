@@ -22,6 +22,7 @@ class Load extends Phaser.Scene {
         this.load.spritesheet('player', 'assets/player.png', { frameWidth: 53, frameHeight: 94 });
         this.load.spritesheet('tree', 'assets/tree.png', { frameWidth: 70, frameHeight: 134 });
         this.load.image('axe', 'assets/axe.png');
+        this.load.json("title-map", 'assets/title-map.json');
         for (let i = 0; i < LEVEL_NUMBER; i++) {
             this.load.json(`map${i}`, `assets/map${i}.json`);
             this.load.image(`lvl${i}`, `assets/lvl${i}.png`);
