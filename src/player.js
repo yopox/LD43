@@ -102,6 +102,7 @@ class Player {
 
         }
 
+        return true;
     }
 
     canSacrifice() {
