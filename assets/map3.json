@@ -23,6 +23,11 @@
          "value":"Use TAB and\narrows to edit\nyour stats."
         }, 
         {
+         "name":"points",
+         "type":"int",
+         "value":50
+        }, 
+        {
          "name":"score",
          "type":"int",
          "value":50

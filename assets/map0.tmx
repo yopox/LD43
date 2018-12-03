@@ -7,8 +7,8 @@ your stats.</property>
   <property name="points" type="int" value="30"/>
   <property name="score" type="int" value="50"/>
  </properties>
- <tileset firstgid="1" name="tileset" tilewidth="94" tileheight="88" tilecount="10" columns="10">
-  <image source="tileset.png" width="940" height="88"/>
+ <tileset firstgid="1" name="tileset" tilewidth="94" tileheight="88" tilecount="12" columns="12">
+  <image source="tileset.png" width="1128" height="88"/>
  </tileset>
  <layer id="8" name="Tile Layer 1" width="12" height="12">
   <data encoding="csv">

@@ -20,6 +20,8 @@ class Load extends Phaser.Scene {
         this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
         this.load.spritesheet('tiles', 'assets/tileset.png', { frameWidth: 94, frameHeight: 88 });
         this.load.spritesheet('player', 'assets/player.png', { frameWidth: 53, frameHeight: 94 });
+        this.load.spritesheet('tree', 'assets/tree.png', { frameWidth: 70, frameHeight: 134 });
+        this.load.image('axe', 'assets/axe.png');
         for (let i = 0; i < LEVEL_NUMBER; i++) {
             this.load.json(`map${i}`, `assets/map${i}.json`);
             this.load.image(`lvl${i}`, `assets/lvl${i}.png`);

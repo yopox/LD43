@@ -24,6 +24,7 @@ class Level extends Phaser.Scene {
         // Keys
         this.TABKey = null;
         this.RKey = null;
+        this.SKey = null;
         this.SPACEKey = null;
         this.ESCKey = null;
 
@@ -62,6 +63,7 @@ class Level extends Phaser.Scene {
         // Keyboard
         this.cursors = this.input.keyboard.createCursorKeys();
         this.RKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.R);
+        this.SKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.TABKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
         this.SPACEKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.ESCKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
@@ -94,7 +96,7 @@ class Level extends Phaser.Scene {
                     this.cameras.main.fadeOut(350, 100, 100, 100);
                     this.fadeTo(this.gui.r1, 0.25, STATES.STATS);
                 }
-                else if (Phaser.Input.Keyboard.JustDown(this.RKey) && this.player.canSacrifice()) {
+                else if (Phaser.Input.Keyboard.JustDown(this.SKey) && this.player.canSacrifice()) {
                     this.gui.selected = 0;
                     this.sacrifice();
                     this.cameras.main.fadeOut(350, 100, 100, 100);
@@ -139,7 +141,7 @@ class Level extends Phaser.Scene {
                         this.player.stats[this.gui.selected]++;
                     }
                 }
-                else if (Phaser.Input.Keyboard.JustDown(this.RKey)) {
+                else if (Phaser.Input.Keyboard.JustDown(this.SKey)) {
                     this.sacrifice();
                 }
 

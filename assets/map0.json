@@ -23,6 +23,11 @@
          "value":"Use TAB and\narrows to edit\nyour stats."
         }, 
         {
+         "name":"points",
+         "type":"int",
+         "value":30
+        }, 
+        {
          "name":"score",
          "type":"int",
          "value":50
@@ -32,15 +37,15 @@
  "tileheight":54,
  "tilesets":[
         {
-         "columns":10,
+         "columns":12,
          "firstgid":1,
          "image":"tileset.png",
          "imageheight":88,
-         "imagewidth":940,
+         "imagewidth":1128,
          "margin":0,
          "name":"tileset",
          "spacing":0,
-         "tilecount":10,
+         "tilecount":12,
          "tileheight":88,
          "tilewidth":94
         }],
