@@ -1,15 +1,16 @@
 const STATS = ["Stamina", "Strength", "Wisdom"];
-const RESET_TEXT = "Press R to reset";
+const RESET_TEXT = "S to sacrifice (-2)";
 const GUI_OFFSET = 128 * 16;
-const GUI_Y = [32, 80, 344];
+const GUI_Y = [16, 96, 360];
 
 class GUI {
 
     constructor(scene, map) {
 
         // SCORE
-        scene.add.rectangle(GUI_OFFSET, GUI_Y[0], 240, 32, 0xffffff).setOrigin(0).setDepth(1500);
+        scene.add.rectangle(GUI_OFFSET, GUI_Y[0], 240, 64, 0xffffff).setOrigin(0).setDepth(1500);
         this.score = this.addText(scene, 16, GUI_Y[0]- 16, '48px', "");
+        this.sacrifices = this.addText(scene, 16, GUI_Y[0] + 16, '48px', "");
 
         // STATS
         scene.add.rectangle(GUI_OFFSET, GUI_Y[1], 240, 248, 0xffffff).setOrigin(0).setDepth(1500);
@@ -28,7 +29,7 @@ class GUI {
         this.addText(scene, 16, GUI_Y[2], '48px', map.desc).setLineSpacing(-16);
 
         // Cameras
-        var guiCam0 = scene.cameras.add(32, GUI_Y[0], 240, 32);
+        var guiCam0 = scene.cameras.add(32, GUI_Y[0], 240, 64);
         guiCam0.scrollX = GUI_OFFSET;
         guiCam0.scrollY = GUI_Y[0];
         var guiCam1 = scene.cameras.add(32, GUI_Y[1], 240, 248);
@@ -44,6 +45,7 @@ class GUI {
 
     update(player) {
         this.score.text = "Points : " + player.score;
+        this.sacrifices.text = "Sacrifices : " + player.sacrifices;
         this.left.text = "Left : " + player.points;
         this.text1.text = STATS[0] + " : " + player.stats[0];
         this.text2.text = STATS[1] + " : " + player.stats[1];
