@@ -1,11 +1,12 @@
 class LevelSelect extends Phaser.Scene {
     constructor() {
-        super({key: 'levelSelect'});
+        super({ key: 'levelSelect' });
         this.selected = -1;
         this.rectangles = [];
         this.scores = [];
         this.bestScores = new BestScores();
         this.toUpdateScores = false;
+        this.block = true;
     }
 
     preload() {
@@ -16,7 +17,7 @@ class LevelSelect extends Phaser.Scene {
         this.bestScores.update();
 
         this.add.text(320, -4, '--- Level Selection ---',
-            {fontFamily: 'm3x6', fontSize: '48px', color: '#000000'});
+            { fontFamily: 'm3x6', fontSize: '48px', color: '#000000' });
 
         this.selected = -1;
         this.rectangles = [];
@@ -32,6 +33,23 @@ class LevelSelect extends Phaser.Scene {
         this.drawMenu();
 
         this.select(0);
+
+        this.cameras.main.setAlpha(0).setScroll(0, -32);
+        var alphaTween = this.tweens.add({
+            targets: this.cameras.main,
+            alpha: 1,
+            ease: 'Power1',
+            duration: 500,
+            repeat: 0
+        });
+        this.tweens.add({
+            targets: this.cameras.main,
+            scrollY: 0,
+            ease: 'Power1',
+            duration: 500,
+            repeat: 0
+        });
+        alphaTween.setCallback("onComplete", function (scene) { scene.block = false; }, [this,]);
 
     }
 
@@ -64,7 +82,7 @@ class LevelSelect extends Phaser.Scene {
             this.add.rectangle(x + GAME_WIDTH / 4, y, GAME_WIDTH / 2, this.step, 0xffffff)
                 .setAlpha(0).setInteractive()
                 .on('pointerdown', function () {
-                    this.scene.start("level", {lvlNumber: i});
+                    this.scene.start("level", { lvlNumber: i });
                 }, this));
         this.add.image(200 + x, y, "lvl" + i).setDisplaySize(this.imageSize, this.imageSize);
         this.drawText(300 + x, y - 32, "Level " + i, 48);
@@ -88,16 +106,33 @@ class LevelSelect extends Phaser.Scene {
     }
 
     update() {
-        if (this.cursors.space.isDown) {
-            this.scene.start("level", {lvlNumber: this.selected});
-        } else if (Phaser.Input.Keyboard.JustDown(this.cursors.up) && this.selected > 0) {
-            this.select(this.selected - 1);
-        } else if (Phaser.Input.Keyboard.JustDown(this.cursors.down) && this.selected < LEVEL_NUMBER - 1) {
-            this.select(this.selected + 1);
-        } else if (Phaser.Input.Keyboard.JustDown(this.cursors.right) && this.selected < LEVEL_NUMBER / 2) {
-            this.select(this.selected + LEVEL_NUMBER / 2)
-        } else if (Phaser.Input.Keyboard.JustDown(this.cursors.left) && this.selected >= LEVEL_NUMBER / 2) {
-            this.select(this.selected - LEVEL_NUMBER / 2)
+        if (!this.block) {
+            if (this.cursors.space.isDown) {
+                this.block = true;
+                var alphaTween = this.tweens.add({
+                    targets: this.cameras.main,
+                    alpha: 0,
+                    ease: 'Power1',
+                    duration: 400,
+                    repeat: 0
+                });
+                this.tweens.add({
+                    targets: this.cameras.main,
+                    scrollY: -32,
+                    ease: 'Power1',
+                    duration: 400,
+                    repeat: 0
+                });
+                alphaTween.setCallback("onComplete", function (scene) { scene.scene.start("level", { lvlNumber: scene.selected }); }, [this,]);
+            } else if (Phaser.Input.Keyboard.JustDown(this.cursors.up) && this.selected > 0) {
+                this.select(this.selected - 1);
+            } else if (Phaser.Input.Keyboard.JustDown(this.cursors.down) && this.selected < LEVEL_NUMBER - 1) {
+                this.select(this.selected + 1);
+            } else if (Phaser.Input.Keyboard.JustDown(this.cursors.right) && this.selected < LEVEL_NUMBER / 2) {
+                this.select(this.selected + LEVEL_NUMBER / 2)
+            } else if (Phaser.Input.Keyboard.JustDown(this.cursors.left) && this.selected >= LEVEL_NUMBER / 2) {
+                this.select(this.selected - LEVEL_NUMBER / 2)
+            }
         }
     }
 }

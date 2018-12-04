@@ -11,7 +11,7 @@ class Level extends Phaser.Scene {
     constructor() {
         super({ key: 'level' });
 
-        this.state = STATES.MOVE;
+        this.state = STATES.TWEEN;
         this.lvlNumber = 0;
 
         // Main UI
@@ -53,7 +53,16 @@ class Level extends Phaser.Scene {
         this.player = new Player(this.map.points);
         this.player.init(this.map.startingPos[0], this.map.startingPos[1], this);
         this.cameras.main.startFollow(this.player.sprite, false, 1, 1, -32 + 157, -32);
-        this.cameras.main.setZoom(1);
+        this.cameras.main.setAlpha(0);
+        this.cameras.main.setScroll(0, 64);
+        var alphaTween = this.tweens.add({
+            targets: this.cameras.main,
+            alpha: 1,
+            ease: 'Power1',
+            duration: 500,
+            repeat: 0
+        });
+        alphaTween.setCallback("onComplete", function (scene) { scene.state = STATES.MOVE; }, [this,]);
 
         // Create GUI
         this.gui = new GUI(this, this.map);
@@ -95,27 +104,27 @@ class Level extends Phaser.Scene {
                 // Edit stats
                 if (this.TABKey.isDown && this.player.block == 0) {
                     this.gui.selected = 0;
-                    this.cameras.main.fadeOut(350, 100, 100, 100);
+                    this.cameras.main.fadeOut(350, 203, 219, 252);
                     this.fadeTo(this.gui.r1, 0.25, STATES.STATS);
                 }
                 else if (Phaser.Input.Keyboard.JustDown(this.SKey) && this.player.canSacrifice()) {
                     this.gui.selected = 0;
                     this.sacrifice();
-                    this.cameras.main.fadeOut(350, 100, 100, 100);
+                    this.cameras.main.fadeOut(350, 203, 219, 252);
                     this.fadeTo(this.gui.r1, 0.25, STATES.STATS);
                 }
                 
                 // The player won
                 if (this.player.finishedLevel && this.player.block == 4) {
                     this.openPopup();
-                    this.cameras.main.fadeOut(350, 100, 100, 100);
+                    this.cameras.main.fadeOut(350, 203, 219, 252);
                     this.state = STATES.WON;
                 }
                 
                 // The player lost
                 if ((this.player.gameOver && this.player.block == 4) || this.ESCKey.isDown) {
                     this.openPopup();
-                    this.cameras.main.fadeOut(350, 100, 100, 100);
+                    this.cameras.main.fadeOut(350, 203, 219, 252);
                     this.state = STATES.GAME_OVER;
                 }
 
@@ -124,7 +133,7 @@ class Level extends Phaser.Scene {
             case STATES.STATS:
                 // Go back to MOVE state
                 if (this.TABKey.isDown) {
-                    this.cameras.main.fadeFrom(350, 100, 100, 100);
+                    this.cameras.main.fadeFrom(350, 203, 219, 252);
                     this.fadeTo(
                         [this.gui.r1, this.gui.r2, this.gui.r3],
                         0, STATES.MOVE);
@@ -158,7 +167,17 @@ class Level extends Phaser.Scene {
 
             case STATES.GAME_OVER:
                 if (this.SPACEKey.isDown) {
-                    this.scene.start("levelSelect");
+                    this.state = STATES.TWEEN;
+                    this.gui.fadeAll(this);
+                    this.popup.fade(this);
+                    var alphaTween = this.tweens.add({
+                        targets: this.cameras.main,
+                        alpha: 0,
+                        ease: 'Power1',
+                        duration: 250,
+                        repeat: 0
+                    });
+                    alphaTween.setCallback("onComplete", function (scene) { scene.scene.start("levelSelect"); }, [this,]);
                 }
                 else if (Phaser.Input.Keyboard.JustDown(this.RKey)) {
                     this.scene.start("level", {lvlNumber: this.lvlNumber});

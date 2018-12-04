@@ -29,15 +29,15 @@ class GUI {
         this.addText(scene, 16, GUI_Y[2], '48px', map.desc).setLineSpacing(-16);
 
         // Cameras
-        var guiCam0 = scene.cameras.add(32, GUI_Y[0], 240, 64);
-        guiCam0.scrollX = GUI_OFFSET;
-        guiCam0.scrollY = GUI_Y[0];
-        var guiCam1 = scene.cameras.add(32, GUI_Y[1], 240, 248);
-        guiCam1.scrollX = GUI_OFFSET;
-        guiCam1.scrollY = GUI_Y[1];
-        var guiCam2 = scene.cameras.add(32, GUI_Y[2], 240, 128);
-        guiCam2.scrollX = GUI_OFFSET;
-        guiCam2.scrollY = GUI_Y[2];
+        this.guiCam0 = scene.cameras.add(32, GUI_Y[0], 240, 64);
+        this.guiCam0.scrollX = GUI_OFFSET;
+        this.guiCam0.scrollY = GUI_Y[0];
+        this.guiCam1 = scene.cameras.add(32, GUI_Y[1], 240, 248);
+        this.guiCam1.scrollX = GUI_OFFSET;
+        this.guiCam1.scrollY = GUI_Y[1];
+        this.guiCam2 = scene.cameras.add(32, GUI_Y[2], 240, 128);
+        this.guiCam2.scrollX = GUI_OFFSET;
+        this.guiCam2.scrollY = GUI_Y[2];
 
         // Non visual
         this.selected = 0;
@@ -72,6 +72,16 @@ class GUI {
 
     addText(scene, x, y, size, text) {
         return scene.add.text(GUI_OFFSET + x, y, text, { fontFamily: 'm3x6', fontSize: size, color: '#000000', width: 300 }).setDepth(1510);
+    }
+
+    fadeAll(scene) {
+        scene.tweens.add({
+            targets: [this.guiCam0, this.guiCam1, this.guiCam2],
+            alpha: 0,
+            ease: 'Power1',
+            duration: 250,
+            repeat: 0
+        });
     }
 
 }

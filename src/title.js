@@ -4,6 +4,7 @@ class Title extends Phaser.Scene {
         this.cursors = null;
         this.map = null;
         this.lastDir = null;
+        this.block = false;
     }
 
     preload() {
@@ -45,10 +46,27 @@ class Title extends Phaser.Scene {
     }
 
     update() {
-        this.player.update();
-        this.map.update();
-        if (this.cursors.space.isDown) {
-            this.scene.start("levelSelect");
+        if (!this.block) {
+            this.player.update();
+            this.map.update();
+            if (this.cursors.space.isDown) {
+                this.block = true;
+                var alphaTween = this.tweens.add({
+                    targets: this.cameras.main,
+                    alpha: 0,
+                    ease: 'Power1',
+                    duration: 250,
+                    repeat: 0
+                });
+                this.tweens.add({
+                    targets: this.cameras.main,
+                    scrollY: 112 - 32,
+                    ease: 'Power1',
+                    duration: 250,
+                    repeat: 0
+                });
+                alphaTween.setCallback("onComplete", function (scene) { scene.scene.start("levelSelect"); }, [this,]);
+            }
         }
     }
 
