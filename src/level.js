@@ -41,6 +41,9 @@ class Level extends Phaser.Scene {
     }
 
     create() {
+
+        playMusic(BGM.LEVEL);
+
         // Init
         this.state = STATES.MOVE;
         this.bestScore = new BestScores();

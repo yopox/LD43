@@ -16,7 +16,6 @@ class Load extends Phaser.Scene {
     }
 
     preload() {
-        console.log("Load");
         this.load.script('webfont', 'https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js');
         this.load.spritesheet('tiles', 'assets/tileset.png', { frameWidth: 94, frameHeight: 88 });
         this.load.spritesheet('player', 'assets/player.png', { frameWidth: 53, frameHeight: 94 });
@@ -36,6 +35,9 @@ class Load extends Phaser.Scene {
         this.load.audio('menu', 'assets/SFX/menu.ogg');
         this.load.audio('rock', 'assets/SFX/rock.ogg');
         this.load.audio('sacrifice', 'assets/SFX/sacrifice.ogg');
+
+        this.load.audio('title', 'assets/BGM/title.ogg');
+        this.load.audio('level', 'assets/BGM/level.ogg');
     }
 
     create() {
@@ -46,6 +48,9 @@ class Load extends Phaser.Scene {
         SOUNDS.push(this.sound.add('menu').setVolume(0.025));
         SOUNDS.push(this.sound.add('rock').setVolume(0.25));
         SOUNDS.push(this.sound.add('sacrifice').setVolume(0.25));
+
+        MUSICS.push(this.sound.add('title').setVolume(0.25));
+        MUSICS.push(this.sound.add('level').setVolume(0.15));
         WebFont.load({
             custom: {
                 families: ['m3x6']

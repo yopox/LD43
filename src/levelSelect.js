@@ -13,6 +13,8 @@ class LevelSelect extends Phaser.Scene {
     }
 
     create() {
+        playMusic(BGM.TITLE);
+
         this.cursors = this.input.keyboard.createCursorKeys();
         this.bestScores.update();
 

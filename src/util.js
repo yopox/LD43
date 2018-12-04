@@ -22,12 +22,30 @@ const SFX = {
     MENU: 4,
     ROCK: 5,
     SACRIFICE: 6
-}
+};
+
+const BGM = {
+    TITLE: 0,
+    LEVEL: 1
+};
 
 var SOUNDS = [];
+var MUSICS = [];
 
 function playSFX(sfx) {
     SOUNDS[sfx].play();
+}
+
+function playMusic(music) {
+    if (music == BGM.TITLE && !MUSICS[0].isPlaying) {
+        MUSICS[1].stop();
+        MUSICS[0].play();
+        MUSICS[0].setLoop(true);
+    } else if (music == BGM.LEVEL && !MUSICS[1].isPlaying) {
+        MUSICS[0].stop();
+        MUSICS[1].play();
+        MUSICS[1].setLoop(true);
+    }
 }
 
 function oob(pos, map) {
@@ -108,8 +126,6 @@ const NAME_BEST_SCORES_STORAGE = "SacriflagBestScores";
 class BestScores {
     constructor() {
         this.scores = load(NAME_BEST_SCORES_STORAGE);
-        console.log(load(NAME_BEST_SCORES_STORAGE));
-        
         if (!this.scores || this.scores[0] == 0) {
             this.scores = [];
             for (let i = 0; i < LEVEL_NUMBER; i++)

@@ -11,6 +11,7 @@ class Title extends Phaser.Scene {
     }
 
     create() {
+        playMusic(BGM.TITLE);
         this.cursors = this.input.keyboard.createCursorKeys();
 
         this.map = new Tilemap(`title-map`, this);

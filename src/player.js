@@ -17,8 +17,6 @@ class Player {
 
     init(x, y, scene) {
         this.pos = [x, y];
-        console.log(this.pos);
-
         this.sprite = scene.add.sprite((x - y) * 47 - 26, (x + y) * 27 - 87, 'player', 0);
         this.sprite.setOrigin(0, 0);
         this.sprite.depth = 1000;
