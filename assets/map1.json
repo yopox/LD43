@@ -20,7 +20,7 @@
          "name":"Tile Layer 2",
          "opacity":1,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":8,
          "x":0,
          "y":0
@@ -32,12 +32,12 @@
         {
          "name":"desc",
          "type":"string",
-         "value":"Use TAB and\narrows to edit\nyour stats."
+         "value":"Moving on\nfull forest tiles\ncosts 2 stamina."
         }, 
         {
          "name":"points",
          "type":"int",
-         "value":12
+         "value":30
         }, 
         {
          "name":"score",

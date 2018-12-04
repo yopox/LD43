@@ -92,10 +92,12 @@ const NAME_BEST_SCORES_STORAGE = "SacriflagBestScores";
 class BestScores {
     constructor() {
         this.scores = load(NAME_BEST_SCORES_STORAGE);
-        if (!this.scores) {
+        console.log(load(NAME_BEST_SCORES_STORAGE));
+        
+        if (!this.scores || this.scores[0] == 0) {
             this.scores = [];
             for (let i = 0; i < LEVEL_NUMBER; i++)
-                this.scores.push(0);
+                this.scores.push([0, false]);
             save(NAME_BEST_SCORES_STORAGE, this.scores);
         }
     }
@@ -105,13 +107,21 @@ class BestScores {
     }
 
     setBestScore(lvl, score) {
-        this.scores[lvl] = score;
+        this.scores[lvl][0] = score;
         save(NAME_BEST_SCORES_STORAGE, this.scores);
     }
 
-    setScore(lvl, score) {
-        if (score > this.getScore(lvl))
+    setGem(lvl, gem) {
+        this.scores[lvl][1] = gem;
+        save(NAME_BEST_SCORES_STORAGE, this.scores);
+    }
+
+    setScore(lvl, score, gem) {
+        if (score > this.getScore(lvl)[0])
             this.setBestScore(lvl, score);
+        if (gem) {
+            this.setGem(lvl, gem);
+        }
     }
 
     update() {

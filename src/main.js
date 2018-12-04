@@ -1,4 +1,3 @@
-
 var config = {
     type: Phaser.WEBGL,
     backgroundColor: "#cbdbfc",

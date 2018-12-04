@@ -69,7 +69,12 @@ class LevelSelect extends Phaser.Scene {
         this.add.image(200 + x, y, "lvl" + i).setDisplaySize(this.imageSize, this.imageSize);
         this.drawText(300 + x, y - 32, "Level " + i, 48);
         this.drawText(114 + x, y - 4, "BEST", 32).setOrigin(0.5, 1);
-        this.scores.push(this.drawText(116 + x, y + 28, this.bestScores.getScore(i) + "%", 48).setOrigin(0.5, 1));
+        var score = this.bestScores.getScore(i);
+        this.scores.push(this.drawText(116 + x, y + 28, score[0] + "%", 48).setOrigin(0.5, 1));
+        var gem = this.add.image(48 + x, y + 14, "gem").setScale(2);
+        if (!score[1]) {
+            gem.setTint(0x000000);
+        }
     }
 
     select(rect) {
