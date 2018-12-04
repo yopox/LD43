@@ -161,7 +161,17 @@ class Level extends Phaser.Scene {
 
             case STATES.WON:
                 if (this.SPACEKey.isDown) {
-                    this.scene.start("levelSelect");
+                    this.state = STATES.TWEEN;
+                    this.gui.fadeAll(this);
+                    this.popup.fade(this);
+                    var alphaTween = this.tweens.add({
+                        targets: this.cameras.main,
+                        alpha: 0,
+                        ease: 'Power1',
+                        duration: 250,
+                        repeat: 0
+                    });
+                    alphaTween.setCallback("onComplete", function (scene) { scene.scene.start("levelSelect"); }, [this,]);
                 }
                 break;
 
