@@ -37,7 +37,7 @@
         {
          "name":"points",
          "type":"int",
-         "value":35
+         "value":40
         }, 
         {
          "name":"score",

@@ -50,6 +50,7 @@ class Title extends Phaser.Scene {
             this.player.update();
             this.map.update();
             if (this.cursors.space.isDown) {
+                playSFX(SFX.MENU);
                 this.block = true;
                 var alphaTween = this.tweens.add({
                     targets: this.cameras.main,

@@ -42,7 +42,7 @@
         {
          "name":"score",
          "type":"int",
-         "value":50
+         "value":112
         }],
  "renderorder":"right-down",
  "tiledversion":"1.2.0",

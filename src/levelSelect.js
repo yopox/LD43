@@ -108,6 +108,7 @@ class LevelSelect extends Phaser.Scene {
     update() {
         if (!this.block) {
             if (this.cursors.space.isDown) {
+                playSFX(SFX.MENU);
                 this.block = true;
                 var alphaTween = this.tweens.add({
                     targets: this.cameras.main,
@@ -125,12 +126,16 @@ class LevelSelect extends Phaser.Scene {
                 });
                 alphaTween.setCallback("onComplete", function (scene) { scene.scene.start("level", { lvlNumber: scene.selected }); }, [this,]);
             } else if (Phaser.Input.Keyboard.JustDown(this.cursors.up) && this.selected > 0) {
+                playSFX(SFX.MENU);
                 this.select(this.selected - 1);
             } else if (Phaser.Input.Keyboard.JustDown(this.cursors.down) && this.selected < LEVEL_NUMBER - 1) {
+                playSFX(SFX.MENU);
                 this.select(this.selected + 1);
             } else if (Phaser.Input.Keyboard.JustDown(this.cursors.right) && this.selected < LEVEL_NUMBER / 2) {
+                playSFX(SFX.MENU);
                 this.select(this.selected + LEVEL_NUMBER / 2)
             } else if (Phaser.Input.Keyboard.JustDown(this.cursors.left) && this.selected >= LEVEL_NUMBER / 2) {
+                playSFX(SFX.MENU);
                 this.select(this.selected - LEVEL_NUMBER / 2)
             }
         }

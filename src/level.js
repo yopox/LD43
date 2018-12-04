@@ -108,6 +108,7 @@ class Level extends Phaser.Scene {
                     this.fadeTo(this.gui.r1, 0.25, STATES.STATS);
                 }
                 else if (Phaser.Input.Keyboard.JustDown(this.SKey) && this.player.canSacrifice()) {
+                    playSFX(SFX.SACRIFICE);
                     this.gui.selected = 0;
                     this.sacrifice();
                     this.cameras.main.fadeOut(350, 203, 219, 252);
@@ -153,6 +154,7 @@ class Level extends Phaser.Scene {
                     }
                 }
                 else if (Phaser.Input.Keyboard.JustDown(this.SKey)) {
+                    playSFX(SFX.SACRIFICE);
                     this.sacrifice();
                 }
 

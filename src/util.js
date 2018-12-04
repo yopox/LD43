@@ -14,6 +14,22 @@ const dir = {
     DOWN: [0, 1]
 };
 
+const SFX = {
+    CARAC: 0,
+    CUT: 1,
+    GEM: 2,
+    JUMP: 3,
+    MENU: 4,
+    ROCK: 5,
+    SACRIFICE: 6
+}
+
+var SOUNDS = [];
+
+function playSFX(sfx) {
+    SOUNDS[sfx].play();
+}
+
 function oob(pos, map) {
     return pos[0] < 0 || pos[0] >= map.width || pos[1] < 0 || pos[1] >= map.height;
 }

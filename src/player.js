@@ -52,6 +52,7 @@ class Player {
 
             // Can we cut ?
             if (this.stats[1] >= CUT_COST && this.axes > 0) {
+                playSFX(SFX.CUT);
                 map.cut(scene, nPos);
                 this.score += this.stats[2];
                 this.stats[1] -= CUT_COST;
@@ -71,6 +72,7 @@ class Player {
 
                 // Push the rock
                 if (this.stats[1] >= 1 && !oob(nRockPos, map) && !checkCollision(nRockPos, map) && !map.checkCollision(nRockPos)) {
+                    playSFX(SFX.ROCK);
                     map.pushRock(scene, nPos, direction);
                     this.score += this.stats[2];
                     this.stats[1] -= CUT_PUSH;
@@ -91,6 +93,8 @@ class Player {
                 this.pos = nPos;
                 this.sprite.depth = 500 + nPos[0] + nPos[1];
 
+                playSFX(SFX.JUMP);
+
                 switch (direction) {
                     case dir.UP:
                         this.nextPos = [[1, 0, 0], [1, 0, 0], [1, 0, 0], [2, 12, -7], [2, 12, -7], [3, 6, -4], [3, 6, -3], [4, 6, -3], [4, 5, -3], [0, 0, 0]].reverse();
@@ -108,11 +112,13 @@ class Player {
 
                 // Found axe ?
                 if (map.getAxe(scene, this.pos)) {
+                    playSFX(SFX.CARAC);
                     this.axes += 1;
                 }
 
                 // Found gem ?
                 if (map.getGem(scene, this.pos)) {
+                    playSFX(SFX.GEM);
                     this.gem = true;
                 }
 

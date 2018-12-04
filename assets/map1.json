@@ -37,12 +37,12 @@
         {
          "name":"points",
          "type":"int",
-         "value":30
+         "value":15
         }, 
         {
          "name":"score",
          "type":"int",
-         "value":36
+         "value":45
         }],
  "renderorder":"right-down",
  "tiledversion":"1.2.0",
